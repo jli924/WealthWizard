@@ -12,7 +12,7 @@ budgets = Blueprint('budgets', __name__)
 @budgets.route('/budgets', methods=['GET'])
 def get_budgets():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT budgetid, maxamount, minremaining, remaining, spent from budgets')
+    cursor.execute('SELECT budget_id, maxamount, minremaining, remaining, spent from budgets')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -31,8 +31,8 @@ def create_budget():
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO budgets (budgetid, maxamount, minremaining, remaining, spent) VALUES (%s, %s, %s, %s, %s)',
-            (data['budgetid'], data.get('maxamount'), data['minremaining'], data.get('remaining'), data.get('spent'))
+            'INSERT INTO budgets (budget_id, maxamount, minremaining, remaining, spent) VALUES (%s, %s, %s, %s, %s)',
+            (data['budget_id'], data.get('maxamount'), data['minremaining'], data.get('remaining'), data.get('spent'))
         )
         db.get_db().commit()
         response = {"message": "Budget created successfully"}
@@ -40,10 +40,10 @@ def create_budget():
     except Exception as e:
         db.get_db().rollback()
         response = {"error": str(e)}
-        return make_response(jsonify(response), 500)\
+        return make_response(jsonify(response), 500)
     
 # update the mutable budget information
-@users.route('/budgets/budgetID', methods=['PUT'])
+@budgets.route('/budgets/budgetID', methods=['PUT'])
 def update_budget():
     budget_info = request.json
     id = budget_info['budget_id']
@@ -61,10 +61,10 @@ def update_budget():
 
 # Delete the budget info given its ID number
 @budgets.route('/budgets/<budgetID>', methods=['DELETE'])
-def delete_budget(budgetID):
+def delete_budget(budget_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM budgets WHERE budgetid = %s', (user_id,))
+        cursor.execute('DELETE FROM budgets WHERE budget_id = %s'.format(budget_id))
         db.get_db().commit()
         return make_response(jsonify({'message': 'Budget deleted successfully'}), 200)
     except Exception as e:
@@ -73,9 +73,9 @@ def delete_budget(budgetID):
 
 # Get detailed info of all budgets based on its budgetID
 @budgets.route('/budgets/<budgetID>', methods=['GET'])
-def get_budget_budgetid(budgetID):
+def get_budget_budgetid(budget_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from budgets where budgetID = %s'.format(budgetID))
+    cursor.execute('select * from budgets where budget_id = %s'.format(budget_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
