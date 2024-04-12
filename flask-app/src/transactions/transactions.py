@@ -6,13 +6,13 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-transactions = Blueprint('transactions', __name__)
+transactions = Blueprint('Transactions', __name__)
 
 # Get all the transactions from the database
-@transactions.route('/transactions', methods=['GET'])
+@transactions.route('/Transactions', methods=['GET'])
 def get_transactions():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT transaction_id, amount, date, description from transactions')
+    cursor.execute('SELECT Transaction_id, Amount, Date, Description from Transactions')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -24,18 +24,18 @@ def get_transactions():
     return the_response
 
 # Add a new transaction to the database
-@transactions.route('/transactions', methods=['POST'])
+@transactions.route('/Transactions', methods=['POST'])
 def create_transaction():
     data = request.get_json()  
     # Insert data into database
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO transactions (transaction_id, amount, date, description) VALUES (%s, %s, %s, %s)',
-            (data.get('transaction_id'), data.get('amount'), data.get('date'), data.get('description'))
+            'INSERT INTO Transactions (Transaction_id, Amount, Date, Description) VALUES (%s, %s, %s, %s)',
+            (data.get('Transaction_id'), data.get('amount'), data.get('date'), data.get('Description'))
         )
         db.get_db().commit()
-        response = {"message": "transaction created successfully"}
+        response = {"message": "Transaction created successfully"}
         return make_response(jsonify(response), 200)
     except Exception as e:
         db.get_db().rollback()
@@ -43,38 +43,38 @@ def create_transaction():
         return make_response(jsonify(response), 500)
     
 # update the mutable transaction information
-@transactions.route('/transactions/transactionID', methods=['PUT'])
+@transactions.route('/Transactions/Transaction_id', methods=['PUT'])
 def update_transaction():
     transaction_info = request.json
-    id = transaction_info['transaction_id']
-    amount = transaction_info['amount']
-    date = transaction_info['date']
-    desc = transaction_info['description']
+    id = transaction_info['Transaction_id']
+    amount = transaction_info['Amount']
+    date = transaction_info['Date']
+    desc = transaction_info['Description']
 
-    query = 'UPDATE transactions SET amount = %s, date = %s, desc = %s where id = %s'
+    query = 'UPDATE Transactions SET amount = %s, date = %s, desc = %s where id = %s'
     data = (amount, date, desc)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
-    return jsonify({'message': 'transaction updated successfully'}), 200
+    return jsonify({'message': 'Transaction updated successfully'}), 200
 
 # Delete the transaction info given its ID number
-@transactions.route('/transactions/<transactionID>', methods=['DELETE'])
-def delete_transaction(transaction_id):
+@transactions.route('/Transactions/<Transaction_id>', methods=['DELETE'])
+def delete_transaction(Transaction_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM transactions WHERE transaction_id = %s'.format(transaction_id))
+        cursor.execute('DELETE FROM Transactions WHERE Transaction_id = %s'.format(Transaction_id))
         db.get_db().commit()
-        return make_response(jsonify({'message': 'transaction deleted successfully'}), 200)
+        return make_response(jsonify({'message': 'Transaction deleted successfully'}), 200)
     except Exception as e:
         db.get_db().rollback()
         return make_response(jsonify({'error': str(e)}), 500)
 
-# Get detailed info of all transactions based on its transactionID
-@transactions.route('/transactions/<transactionID>', methods=['GET'])
-def get_transaction_transactionid(transaction_id):
+# Get detailed info of all transactions based on its Transaction ID
+@transactions.route('/Transactions/<Transaction_id>', methods=['GET'])
+def get_Transaction_Transaction_id(Transaction_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from transactions where transaction_id = %s'.format(transaction_id))
+    cursor.execute('SELECT * FROM Transactions where Transaction_id = %s'.format(Transaction_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -86,10 +86,10 @@ def get_transaction_transactionid(transaction_id):
     return the_response
 
 # Get detailed info of all transactions based on its categoryID
-@transactions.route('/transactions/<categoryID>', methods=['GET'])
-def get_transaction_categoryid(category_id):
+@transactions.route('/Transactions/<CategoryID>', methods=['GET'])
+def get_transaction_categoryid(Category_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from transactions where category_id = %s'.format(category_id))
+    cursor.execute('select * from Transactions where Category_id = %s'.format(Category_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -101,10 +101,10 @@ def get_transaction_categoryid(category_id):
     return the_response
 
 # Get detailed info of all transactions based on its accountID
-@transactions.route('/transactions/<accountID>', methods=['GET'])
-def get_transaction_accountid(account_id):
+@transactions.route('/Transactions/<AccountID>', methods=['GET'])
+def get_transaction_accountid(Account_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from transactions where accountid = %s'.format(account_id))
+    cursor.execute('select * from Transactions where Accountid = %s'.format(Account_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -116,10 +116,10 @@ def get_transaction_accountid(account_id):
     return the_response
 
 # Get detailed info of all transactions based on its goalID
-@transactions.route('/transactions/<goalID>', methods=['GET'])
+@transactions.route('/Transactions/<GoalID>', methods=['GET'])
 def get_transaction_accountid(goal_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from transactions where accountid = %s'.format(goal_id))
+    cursor.execute('select * from Transactions where Account_id = %s'.format(goal_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
