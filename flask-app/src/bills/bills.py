@@ -32,7 +32,7 @@ def create_bill():
         cursor = db.get_db().cursor()
         cursor.execute(
             'INSERT INTO Bills (Bill_id, DueBy, Description, Account_id, Budget_id) VALUES (%s, %s, %s, %s, %s)',
-            (data['Bill_id'], data.get('DueBy'), data['Description'], data.get('Account_id'), data.get('Budget_id'))
+            (data.get('Bill_id'), data.get('DueBy'), data('Description'), data.get('Account_id'), data.get('Budget_id'))
         )
         db.get_db().commit()
         response = {"message": "Bill created successfully"}

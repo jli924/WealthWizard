@@ -32,7 +32,7 @@ def create_user():
         cursor = db.get_db().cursor()
         cursor.execute(
             'INSERT INTO users (firstname, lastname, email, phone, birthdate) VALUES (%s, %s, %s, %s, %s)',
-            (data['firstname'], data.get('lastname'), data['email'], data.get('phone'), data.get('birthdate'))
+            (data.get('firstname'), data.get('lastname'), data.get('email'), data.get('phone'), data.get('birthdate'))
         )
         db.get_db().commit()
         response = {"message": "User created successfully"}
@@ -54,7 +54,7 @@ def update_user():
     birth = user_info['birthdate']
 
     query = 'UPDATE users SET firstname = %s, lastname = %s, email = %s, phone = %s, birthdate = %s where id = %s'
-    data = (first, last, email, phone, birth)
+    data = (first, last, email, phone, birth, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()

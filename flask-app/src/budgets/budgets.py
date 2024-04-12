@@ -32,7 +32,7 @@ def create_budget():
         cursor = db.get_db().cursor()
         cursor.execute(
             'INSERT INTO budgets (budget_id, maxamount, minremaining, remaining, spent) VALUES (%s, %s, %s, %s, %s)',
-            (data['budget_id'], data.get('maxamount'), data['minremaining'], data.get('remaining'), data.get('spent'))
+            (data.get('budget_id'), data.get('maxamount'), data.get('minremaining'), data.get('remaining'), data.get('spent'))
         )
         db.get_db().commit()
         response = {"message": "Budget created successfully"}
