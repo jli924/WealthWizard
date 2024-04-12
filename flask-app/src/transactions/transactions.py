@@ -47,13 +47,12 @@ def create_transaction():
 def update_transaction():
     transaction_info = request.json
     id = transaction_info['transaction_id']
-    max_a = transaction_info['maxamount']
-    min_r = transaction_info['minremaining']
-    remain = transaction_info['remaining']
-    spent = transaction_info['spent']
+    amount = transaction_info['amount']
+    date = transaction_info['date']
+    desc = transaction_info['description']
 
-    query = 'UPDATE transactions SET max_a = %s, min_r = %s, remain = %s, spent = %s where id = %s'
-    data = (max_a, min_r, remain, spent)
+    query = 'UPDATE transactions SET amount = %s, date = %s, desc = %s where id = %s'
+    data = (amount, date, desc)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
@@ -88,9 +87,9 @@ def get_transaction_transactionid(transaction_id):
 
 # Get detailed info of all transactions based on its categoryID
 @transactions.route('/transactions/<categoryID>', methods=['GET'])
-def get_transaction_categoryid(categoryid):
+def get_transaction_categoryid(category_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from transactions where categoryid = %s'.format(categoryid))
+    cursor.execute('select * from transactions where category_id = %s'.format(category_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -103,9 +102,24 @@ def get_transaction_categoryid(categoryid):
 
 # Get detailed info of all transactions based on its accountID
 @transactions.route('/transactions/<accountID>', methods=['GET'])
-def get_transaction_accountid(accountid):
+def get_transaction_accountid(account_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from transactions where accountid = %s'.format(accountid))
+    cursor.execute('select * from transactions where accountid = %s'.format(account_id))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# Get detailed info of all transactions based on its goalID
+@transactions.route('/transactions/<goalID>', methods=['GET'])
+def get_transaction_accountid(goal_id):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from transactions where accountid = %s'.format(goal_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

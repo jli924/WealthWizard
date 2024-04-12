@@ -54,7 +54,7 @@ def update_user():
     birth = user_info['birthdate']
 
     query = 'UPDATE users SET firstname = %s, lastname = %s, email = %s, phone = %s, birthdate = %s where id = %s'
-    data = (first, last, email, phone, birth)
+    data = (first, last, email, phone, birth, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
