@@ -26,13 +26,7 @@ def get_users():
 # add a new user to the database
 @users.route('/users', methods=['POST'])
 def create_user():
-    data = request.get_json()  # Assumes the request body contains JSON with the new user's data
-
-    # Validate data or handle it according to your application's requirements
-    if not data or not 'email' in data or not 'firstname' in data:
-        # Assuming email and firstname are mandatory
-        response = {"error": "Missing data"}
-        return make_response(jsonify(response), 400)
+    data = request.get_json()  
     # Insert data into database
     try:
         cursor = db.get_db().cursor()
@@ -47,23 +41,8 @@ def create_user():
         db.get_db().rollback()
         response = {"error": str(e)}
         return make_response(jsonify(response), 500)
-
-# Get detailed info of all users with a particular userID
-@users.route('/users/<userID>', methods=['GET'])
-def get_user(userID):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from users where userID = {0}'.format(userID))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-# update the users information given their ID number
+    
+# update the users information
 @users.route('/users', methods=['PUT'])
 def update_user():
     user_info = request.json
@@ -83,7 +62,7 @@ def update_user():
 
 # Delete the users info given their ID number
 @users.route('/users/<userID>', methods=['DELETE'])
-def delete_user(user_id):
+def delete_user(userID):
     cursor = db.get_db().cursor()
     try:
         cursor.execute('DELETE FROM users WHERE userid = %s', (user_id,))
@@ -92,4 +71,20 @@ def delete_user(user_id):
     except Exception as e:
         db.get_db().rollback()
         return make_response(jsonify({'error': str(e)}), 500)
+
+# Get detailed info of all users with a particular userID
+@users.route('/users/<userID>', methods=['GET'])
+def get_user(userID):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from users where userID = %s'.format(userID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
 
