@@ -43,7 +43,7 @@ def create_budget():
         return make_response(jsonify(response), 500)\
     
 # update the mutable budget information
-@users.route('/budgets', methods=['PUT'])
+@users.route('/budgets/budgetID', methods=['PUT'])
 def update_budget():
     budget_info = request.json
     id = budget_info['budget_id']
@@ -101,22 +101,7 @@ def get_budget_categoryid(categoryid):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Get detailed info of all budgets based on its categoryID
-@budgets.route('/budgets/<categoryID>', methods=['GET'])
-def get_budget_categoryid(categoryid):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from budgets where categoryid = %s'.format(categoryid))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-# Get detailed info of all budgets based on its categoryID
+# Get detailed info of all budgets based on its accountID
 @budgets.route('/budgets/<accountID>', methods=['GET'])
 def get_budget_accountid(accountid):
     cursor = db.get_db().cursor()
