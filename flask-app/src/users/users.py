@@ -12,7 +12,7 @@ users = Blueprint('users', __name__)
 @users.route('/users', methods=['GET'])
 def get_users():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT userid, firstname, lastname, email, phone, birthdate from users')
+    cursor.execute('SELECT user_id, firstname, lastname, email, phone, birthdate from users')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -46,7 +46,7 @@ def create_user():
 @users.route('/users', methods=['PUT'])
 def update_user():
     user_info = request.json
-    id = user_info['userid']
+    id = user_info['user_id']
     first = user_info['firstname']
     last = user_info['lastname']
     email = user_info['email']
@@ -62,10 +62,10 @@ def update_user():
 
 # Delete the users info given their ID number
 @users.route('/users/<userID>', methods=['DELETE'])
-def delete_user(userID):
+def delete_user(user_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM users WHERE userid = %s', (user_id,))
+        cursor.execute('DELETE FROM users WHERE user_id = %s'.format(user_id))
         db.get_db().commit()
         return make_response(jsonify({'message': 'User deleted successfully'}), 200)
     except Exception as e:
@@ -74,9 +74,9 @@ def delete_user(userID):
 
 # Get detailed info of all users with a particular userID
 @users.route('/users/<userID>', methods=['GET'])
-def get_user(userID):
+def get_user(user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from users where userID = %s'.format(userID))
+    cursor.execute('select * from users where userID = %s'.format(user_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
