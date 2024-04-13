@@ -1,7 +1,7 @@
 CREATE DATABASE Magic;
 USE Magic;
 
-CREATE TABLE Users (
+CREATE TABLE IF NOT EXISTS Users (
     User_id int NOT NULL PRIMARY KEY,
     FirstName TEXT NOT NULL,
     MiddleName TEXT NOT NULL,
