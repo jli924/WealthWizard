@@ -6,13 +6,13 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-budgets = Blueprint('budgets', __name__)
+budgets = Blueprint('Budgets', __name__)
 
 # Get all the budgets from the database
-@budgets.route('/budgets', methods=['GET'])
+@budgets.route('/Budgets', methods=['GET'])
 def get_budgets():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT budget_id, maxamount, minremaining, remaining, spent from budgets')
+    cursor.execute('SELECT Budget_id, MaxAmount, MinRemaining, Remaining, Spent from Budgets')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -24,15 +24,15 @@ def get_budgets():
     return the_response
 
 # Add a new budget to the database
-@budgets.route('/budgets', methods=['POST'])
+@budgets.route('/Budgets', methods=['POST'])
 def create_budget():
     data = request.get_json()  
     # Insert data into database
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO budgets (budget_id, maxamount, minremaining, remaining, spent) VALUES (%s, %s, %s, %s, %s)',
-            (data.get('budget_id'), data.get('maxamount'), data.get('minremaining'), data.get('remaining'), data.get('spent'))
+            'INSERT INTO Budgets (Budget_id, MaxAmount, MinRemaining, Remaining, Spent) VALUES (%s, %s, %s, %s, %s)',
+            (data.get('Budget_id'), data.get('MaxAmount'), data.get('MinRemaining'), data.get('Remaining'), data.get('Spent'))
         )
         db.get_db().commit()
         response = {"message": "Budget created successfully"}
@@ -43,16 +43,16 @@ def create_budget():
         return make_response(jsonify(response), 500)
     
 # update the mutable budget information
-@budgets.route('/budgets/budgetID', methods=['PUT'])
+@budgets.route('/Budgets/Budget_id', methods=['PUT'])
 def update_budget():
     budget_info = request.json
-    id = budget_info['budget_id']
-    max_a = budget_info['maxamount']
-    min_r = budget_info['minremaining']
-    remain = budget_info['remaining']
-    spent = budget_info['spent']
+    id = budget_info['Budget_id']
+    max_a = budget_info['MaxAmount']
+    min_r = budget_info['MinRemaining']
+    remain = budget_info['Remaining']
+    spent = budget_info['Spent']
 
-    query = 'UPDATE budgets SET max_a = %s, min_r = %s, remain = %s, spent = %s where id = %s'
+    query = 'UPDATE Budgets SET MaxAmount = %s, MinRemaining = %s, Remaining = %s, Spent = %s where Budget_id = %s'
     data = (max_a, min_r, remain, spent)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
@@ -60,11 +60,11 @@ def update_budget():
     return jsonify({'message': 'Budget updated successfully'}), 200
 
 # Delete the budget info given its ID number
-@budgets.route('/budgets/<budgetID>', methods=['DELETE'])
+@budgets.route('/Budgets/<Budget_id>', methods=['DELETE'])
 def delete_budget(budget_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM budgets WHERE budget_id = %s'.format(budget_id))
+        cursor.execute('DELETE FROM Budgets WHERE Budget_id = %s'.format(budget_id))
         db.get_db().commit()
         return make_response(jsonify({'message': 'Budget deleted successfully'}), 200)
     except Exception as e:
@@ -72,10 +72,10 @@ def delete_budget(budget_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all budgets based on its budgetID
-@budgets.route('/budgets/<budgetID>', methods=['GET'])
+@budgets.route('/Budgets/<Budget_id>', methods=['GET'])
 def get_budget_budgetid(budget_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from budgets where budget_id = %s'.format(budget_id))
+    cursor.execute('select * from Budgets where Budget_id = %s'.format(budget_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -87,10 +87,10 @@ def get_budget_budgetid(budget_id):
     return the_response
 
 # Get detailed info of all budgets based on its categoryID
-@budgets.route('/budgets/<categoryID>', methods=['GET'])
+@budgets.route('/Budgets/<CategoryID>', methods=['GET'])
 def get_budget_categoryid(categoryid):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from budgets where categoryid = %s'.format(categoryid))
+    cursor.execute('select * from Budgets where CategoryID = %s'.format(categoryid))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -102,10 +102,10 @@ def get_budget_categoryid(categoryid):
     return the_response
 
 # Get detailed info of all budgets based on its accountID
-@budgets.route('/budgets/<accountID>', methods=['GET'])
+@budgets.route('/Budgets/<AccountID>', methods=['GET'])
 def get_budget_accountid(accountid):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from budgets where accountid = %s'.format(accountid))
+    cursor.execute('select * from Budgets where AccountID = %s'.format(accountid))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

@@ -213,7 +213,6 @@ CREATE TABLE Investment_Type (
             ON DELETE cascade
 );
 
-
 insert into Users (User_id, FirstName, MiddleName, LastName, Email, Phone, BirthDate) values (1, 'Sutton', 'Duddy', 'Marsden', 'smarsden0@typepad.com', '941-211-8778', '11/18/2023');
 insert into Users (User_id, FirstName, MiddleName, LastName, Email, Phone, BirthDate) values (2, 'Sylvia', 'Ransbury', 'Goneau', 'sgoneau1@infoseek.co.jp', '425-295-9041', '8/11/2023');
 insert into Users (User_id, FirstName, MiddleName, LastName, Email, Phone, BirthDate) values (3, 'Yovonnda', 'Crumpton', 'Klinck', 'yklinck2@mayoclinic.com', '653-882-3329', '8/18/2023');

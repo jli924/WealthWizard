@@ -50,11 +50,9 @@ def update_bill():
     id = bill_info['bill_id']
     due_by = bill_info['DueBy']
     desc = bill_info['Description']
-    acc_id = bill_info['Account_id']
-    budg_id = bill_info['Budget_id']
 
-    query = 'UPDATE Bills SET due_by = %s, desc = %s, acc_id = %s, budg_id = %s where id = %s'
-    data = (due_by, desc, acc_id, budg_id)
+    query = 'UPDATE Bills SET DueBy = %s, Description = %s, where Bill_id = %s'
+    data = (due_by, desc, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
