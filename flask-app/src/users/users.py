@@ -12,7 +12,7 @@ users = Blueprint('Users', __name__)
 @users.route('/users', methods=['GET'])
 def get_users():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT user_id, firstname, lastname, email, phone, birthdate from users')
+    cursor.execute('SELECT User_id, FirstName, MiddleName, LastName, Email, Phone, BirthDate from Users')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
