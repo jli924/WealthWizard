@@ -31,8 +31,8 @@ def create_user():
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO users (firstname, lastname, email, phone, birthdate) VALUES (%s, %s, %s, %s, %s)',
-            (data.get('firstname'), data.get('lastname'), data.get('email'), data.get('phone'), data.get('birthdate'))
+            'INSERT INTO users (user_id, firstname, lastname, email, phone, birthdate) VALUES (%s, %s, %s, %s, %s, %s)',
+            (data.get('user_id'), data.get('firstname'), data.get('lastname'), data.get('email'), data.get('phone'), data.get('birthdate'))
         )
         db.get_db().commit()
         response = {"message": "User created successfully"}
