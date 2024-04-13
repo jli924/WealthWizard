@@ -23,7 +23,7 @@ services:
       - "3200:3306"
     restart: unless-stopped
     environment: 
-      MYSQL_DATABASE : northwind
+      MYSQL_DATABASE : Magic
       MYSQL_USER: webapp
 
       MYSQL_PASSWORD_FILE: /run/secrets/secret_db_pw
