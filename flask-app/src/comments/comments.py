@@ -12,7 +12,7 @@ comments = Blueprint('comments', __name__)
 @comments.route('/comments', methods=['GET'])
 def get_comments():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT comment_id, content from comments')
+    cursor.execute('SELECT Comment_id, CONTENT from comments')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -31,8 +31,8 @@ def create_comment():
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO comments (comment_id, content) VALUES (%s, %s)',
-            (data.get('comment_id'), data.get('content'))
+            'INSERT INTO comments (Comment_id, CONTENT) VALUES (%s, %s)',
+            (data.get('Comment_id'), data.get('CONTENT'))
         )
         db.get_db().commit()
         response = {"message": "comment created successfully"}
@@ -46,8 +46,8 @@ def create_comment():
 @comments.route('/comments/commentID', methods=['PUT'])
 def update_comment():
     comment_info = request.json
-    id = comment_info['comment_id']
-    content = comment_info['content']
+    id = comment_info['Comment_id']
+    content = comment_info['CONTENT']
 
     query = 'UPDATE comments SET content = %s where id = %s'
     data = (content, id)
@@ -58,10 +58,10 @@ def update_comment():
 
 # Delete the comment info given its ID number
 @comments.route('/comments/<commentID>', methods=['DELETE'])
-def delete_comment(comment_id):
+def delete_comment(Comment_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM comments WHERE comment_id = %s'.format(comment_id))
+        cursor.execute('DELETE FROM comments WHERE Comment_id = %s'.format(Comment_id))
         db.get_db().commit()
         return make_response(jsonify({'message': 'comment deleted successfully'}), 200)
     except Exception as e:
@@ -69,10 +69,10 @@ def delete_comment(comment_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all comments based on its comment ID
-@comments.route('/comments/<commentId>', methods=['GET'])
-def get_comment_comment_id(comment_id):
+@comments.route('/comments/<commentID>', methods=['GET'])
+def get_comment_comment_id(Comment_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM comments where comment_id = %s'.format(comment_id))
+    cursor.execute('SELECT * FROM comments where Comment_id = %s'.format(Comment_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -85,9 +85,9 @@ def get_comment_comment_id(comment_id):
 
 # Get detailed info of all comments based on its accountID
 @comments.route('/comments/<accountID>', methods=['GET'])
-def get_comment_accountid(account_id):
+def get_comment_accountid(Account_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from comments where account_id = %s'.format(account_id))
+    cursor.execute('select * from comments where account_id = %s'.format(Account_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
