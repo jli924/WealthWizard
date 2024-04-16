@@ -117,7 +117,7 @@ def get_transaction_accountid(Account_id):
 
 # Get detailed info of all transactions based on its goalID
 @transactions.route('/Transactions/<GoalID>', methods=['GET'])
-def get_transaction_accountid(goal_id):
+def get_transaction_goalid(goal_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Transactions where Account_id = %s'.format(goal_id))
     row_headers = [x[0] for x in cursor.description]

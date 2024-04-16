@@ -72,7 +72,7 @@ def delete_article(article_id):
 
 # Get detailed info of all articles with a particular articleID
 @articles.route('/articles/<articleID>', methods=['GET'])
-def get_article(article_id):
+def get_article_articleid(article_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from articles where articleID = %s'.format(article_id))
     row_headers = [x[0] for x in cursor.description]
@@ -87,7 +87,7 @@ def get_article(article_id):
 
 # Get detailed info of all articles with a particular userID
 @articles.route('/articles/<userID>', methods=['GET'])
-def get_article(user_id):
+def get_article_userid(user_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from articles where articleID = %s'.format(user_id))
     row_headers = [x[0] for x in cursor.description]
