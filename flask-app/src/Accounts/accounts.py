@@ -12,7 +12,7 @@ accounts = Blueprint('accounts', __name__)
 @accounts.route('/accounts', methods=['GET'])
 def get_accounts():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT Account_id, Balance, AccountType, DateCreated FROM Accounts')
+    cursor.execute('SELECT Account_id, Balance, AccountType, Date_created FROM Accounts')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -31,8 +31,8 @@ def create_account():
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO Accounts (Account_id, Balance, AccountType, DateCreated) VALUES (%s, %s, %s, %s)',
-            (data['Account_id'], data.get('Balance'), data['AccountType'], data.get('DateCreated'))
+            'INSERT INTO Accounts (Account_id, Balance, AccountType, Date_created) VALUES (%s, %s, %s, %s)',
+            (data['Account_id'], data.get('Balance'), data['AccountType'], data.get('Date_created'))
         )
         db.get_db().commit()
         response = {"message": "Account created successfully"}
@@ -49,9 +49,9 @@ def update_account():
     id = account_info['Account_id']
     balance = account_info['Balance']
     AccountType = account_info['AccountType']
-    DateCreated = account_info['DateCreated']
+    DateCreated = account_info['Date_created']
 
-    query = 'UPDATE Accounts SET balance = %s, AccountType = %s, DateCreated = %s WHERE Account_id = %s'
+    query = 'UPDATE Accounts SET balance = %s, AccountType = %s, Date_created = %s WHERE Account_id = %s'
     data = (balance, AccountType, DateCreated, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)

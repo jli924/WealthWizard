@@ -12,7 +12,7 @@ articles = Blueprint('articles', __name__)
 @articles.route('/articles', methods=['GET'])
 def get_articles():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT article_id, title, content, uploaddate from articles')
+    cursor.execute('SELECT Article_id, Title, Content, UploadDate from Articles')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -31,11 +31,11 @@ def create_article():
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO articles (article_id, title, content, uploaddate) VALUES (%s, %s, %s, %s)',
-            (data.get('article_id'), data.get('title'), data.get('content'), data.get('uploaddate'))
+            'INSERT INTO articles (Article_id, Title, Content, UploadDate) VALUES (%s, %s, %s, %s)',
+            (data.get('Article_id'), data.get('Title'), data.get('Content'), data.get('UploadDate'))
         )
         db.get_db().commit()
-        response = {"message": "article created successfully"}
+        response = {"message": "Article created successfully"}
         return make_response(jsonify(response), 200)
     except Exception as e:
         db.get_db().rollback()
@@ -51,7 +51,7 @@ def update_article():
     content = article_info['content']
     uploaddate = article_info['uploaddate']
 
-    query = 'UPDATE articles SET title = %s, content = %s, uploaddate = %s where id = %s'
+    query = 'UPDATE Articles SET Title = %s, Content = %s, UploadDate = %s where Article_id = %s'
     data = (title, content, uploaddate, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
@@ -63,7 +63,7 @@ def update_article():
 def delete_article(article_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM articles WHERE article_id = %s'.format(article_id))
+        cursor.execute('DELETE FROM Articles WHERE Article_id = %s'.format(article_id))
         db.get_db().commit()
         return make_response(jsonify({'message': 'article deleted successfully'}), 200)
     except Exception as e:
@@ -74,7 +74,7 @@ def delete_article(article_id):
 @articles.route('/articles/<articleID>', methods=['GET'])
 def get_article_articleid(article_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from articles where articleID = %s'.format(article_id))
+    cursor.execute('select * from Articles where Article_id = %s'.format(article_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -89,7 +89,7 @@ def get_article_articleid(article_id):
 @articles.route('/articles/<userID>', methods=['GET'])
 def get_article_userid(user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from articles where articleID = %s'.format(user_id))
+    cursor.execute('select * from Articles where Article_id = %s'.format(user_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
