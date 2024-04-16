@@ -12,7 +12,7 @@ tags = Blueprint('tags', __name__)
 @tags.route('/tags', methods=['GET'])
 def get_Tags():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT Tag_id, TagName')
+    cursor.execute('SELECT Tag_id, TagName FROM Tags')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

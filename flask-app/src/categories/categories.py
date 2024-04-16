@@ -12,7 +12,7 @@ categories = Blueprint('categories', __name__)
 @categories.route('/categories', methods=['GET'])
 def get_Categories():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT Category_id, Name')
+    cursor.execute('SELECT Category_id, Name FROM Categories')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
