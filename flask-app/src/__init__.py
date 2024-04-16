@@ -33,8 +33,6 @@ def create_app():
         return "<h1>Welcome to the Wealth Wizard app</h1>"
 
     # Import the various Beluprint Objects
-    from src.customers.customers import customers
-    from src.products.products  import products
     from src.users.users  import users
     from src.transactions.transactions  import transactions
     from src.tags.tags import Tags
