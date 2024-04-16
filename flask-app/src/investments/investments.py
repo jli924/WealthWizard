@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-investments = Blueprint('Investments', __name__)
+investments = Blueprint('investments', __name__)
 
 # Get all the investments from the database
-@investments.route('/Investments', methods=['GET'])
+@investments.route('/investments', methods=['GET'])
 def get_investments():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Investment_id, Account_id, Type, Amount, Description, Date from Investments')
@@ -24,7 +24,7 @@ def get_investments():
     return the_response
 
 # Add a new investment to the database
-@investments.route('/Investments', methods=['POST'])
+@investments.route('/investments', methods=['POST'])
 def create_investments():
     data = request.get_json()  
     # Insert data into database
@@ -43,7 +43,7 @@ def create_investments():
         return make_response(jsonify(response), 500)
     
 # update the mutable investment information
-@investments.route('/Investments/Investment_id', methods=['PUT'])
+@investments.route('/investments/investment_id', methods=['PUT'])
 def update_investments():
     inv_info = request.json
     id = inv_info['Investment_id']
@@ -60,7 +60,7 @@ def update_investments():
     return jsonify({'message': 'Investment updated successfully'}), 200
 
 # Delete the investment info given its ID number
-@investments.route('/Investments/<Investment_id>', methods=['DELETE'])
+@investments.route('/investments/<investment_id>', methods=['DELETE'])
 def delete_investments(Investment_id):
     cursor = db.get_db().cursor()
     try:
@@ -72,7 +72,7 @@ def delete_investments(Investment_id):
         return make_response(jsonify({'error': str(e)}), 500)
     
 # Get detailed info of a investment based on its Investment_id
-@investments.route('/Investments/<Investment_id>', methods=['GET'])
+@investments.route('/investments/<investment_id>', methods=['GET'])
 def get_investments_investmentid(Investment_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Investments where Investment_id = %s'.format(Investment_id))
@@ -87,7 +87,7 @@ def get_investments_investmentid(Investment_id):
     return the_response
 
 # Get detailed info of all investment based on its Account_id
-@investments.route('/Investments/<Account_id>', methods=['GET'])
+@investments.route('/investments/<account_id>', methods=['GET'])
 def get_investment_accountid(Account_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Investments where Account_id = %s'.format(Account_id))

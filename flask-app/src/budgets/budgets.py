@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-budgets = Blueprint('Budgets', __name__)
+budgets = Blueprint('budgets', __name__)
 
 # Get all the budgets from the database
-@budgets.route('/Budgets', methods=['GET'])
+@budgets.route('/budgets', methods=['GET'])
 def get_budgets():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Budget_id, MaxAmount, MinRemaining, Remaining, Spent from Budgets')
@@ -24,7 +24,7 @@ def get_budgets():
     return the_response
 
 # Add a new budget to the database
-@budgets.route('/Budgets', methods=['POST'])
+@budgets.route('/budgets', methods=['POST'])
 def create_budget():
     data = request.get_json()  
     # Insert data into database
@@ -43,7 +43,7 @@ def create_budget():
         return make_response(jsonify(response), 500)
     
 # update the mutable budget information
-@budgets.route('/Budgets/Budget_id', methods=['PUT'])
+@budgets.route('/budgets/budget_id', methods=['PUT'])
 def update_budget():
     budget_info = request.json
     id = budget_info['Budget_id']
@@ -60,7 +60,7 @@ def update_budget():
     return jsonify({'message': 'Budget updated successfully'}), 200
 
 # Delete the budget info given its ID number
-@budgets.route('/Budgets/<Budget_id>', methods=['DELETE'])
+@budgets.route('/budgets/<budget_id>', methods=['DELETE'])
 def delete_budget(budget_id):
     cursor = db.get_db().cursor()
     try:
@@ -72,7 +72,7 @@ def delete_budget(budget_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all budgets based on its budgetID
-@budgets.route('/Budgets/<Budget_id>', methods=['GET'])
+@budgets.route('/budgets/<budget_id>', methods=['GET'])
 def get_budget_budgetid(budget_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Budgets where Budget_id = %s'.format(budget_id))
@@ -87,7 +87,7 @@ def get_budget_budgetid(budget_id):
     return the_response
 
 # Get detailed info of all budgets based on its categoryID
-@budgets.route('/Budgets/<CategoryID>', methods=['GET'])
+@budgets.route('/budgets/<categoryID>', methods=['GET'])
 def get_budget_categoryid(categoryid):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Budgets where CategoryID = %s'.format(categoryid))

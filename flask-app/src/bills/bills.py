@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-bills = Blueprint('Bills', __name__)
+bills = Blueprint('bills', __name__)
 
 # Get all the bills from the database
-@bills.route('/Bills', methods=['GET'])
+@bills.route('/bills', methods=['GET'])
 def get_bills():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Bill_id, DueBy, Description, Account_id, Budget_id from Bills')
@@ -24,7 +24,7 @@ def get_bills():
     return the_response
 
 # Add a new bill to the database
-@bills.route('/Bills', methods=['POST'])
+@bills.route('/bills', methods=['POST'])
 def create_bill():
     data = request.get_json()  
     # Insert data into database
@@ -44,7 +44,7 @@ def create_bill():
     
 
 # update the mutable bill information
-@bills.route('/Bills/Bill_id', methods=['PUT'])
+@bills.route('/bills/bill_id', methods=['PUT'])
 def update_bill():
     bill_info = request.json
     id = bill_info['bill_id']
@@ -59,7 +59,7 @@ def update_bill():
     return jsonify({'message': 'Bill updated successfully'}), 200
 
 # Delete the bill info given its ID number
-@bills.route('/Bills/<Bill_id>', methods=['DELETE'])
+@bills.route('/bills/<bill_id>', methods=['DELETE'])
 def delete_bill(Bill_id):
     cursor = db.get_db().cursor()
     try:
@@ -71,7 +71,7 @@ def delete_bill(Bill_id):
         return make_response(jsonify({'error': str(e)}), 500)
     
 # Get detailed info of a bill based on its Bill_id
-@bills.route('/Bills/<Bill_id>', methods=['GET'])
+@bills.route('/bills/<bill_id>', methods=['GET'])
 def get_bill_billid(Bill_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Bills where Bill_id = %s'.format(Bill_id))
@@ -86,7 +86,7 @@ def get_bill_billid(Bill_id):
     return the_response
 
 # Get detailed info of all bills based on its Account_id
-@bills.route('/Bills/<Account_id>', methods=['GET'])
+@bills.route('/bills/<account_id>', methods=['GET'])
 def get_bill_accountid(Account_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Bills where Account_id = %s'.format(Account_id))
@@ -101,7 +101,7 @@ def get_bill_accountid(Account_id):
     return the_response
 
 # Get detailed info of all bills based on its Budget_id
-@bills.route('/Bills/<Budget_id>', methods=['GET'])
+@bills.route('/bills/<budget_id>', methods=['GET'])
 def get_bill_budgetid(Budget_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Bills where Budget_id = %s'.format(Budget_id))

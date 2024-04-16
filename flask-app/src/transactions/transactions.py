@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-transactions = Blueprint('Transactions', __name__)
+transactions = Blueprint('transactions', __name__)
 
 # Get all the transactions from the database
-@transactions.route('/Transactions', methods=['GET'])
+@transactions.route('/transactions', methods=['GET'])
 def get_transactions():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Transaction_id, Amount, Date, Description from Transactions')
@@ -24,7 +24,7 @@ def get_transactions():
     return the_response
 
 # Add a new transaction to the database
-@transactions.route('/Transactions', methods=['POST'])
+@transactions.route('/transactions', methods=['POST'])
 def create_transaction():
     data = request.get_json()  
     # Insert data into database
@@ -43,7 +43,7 @@ def create_transaction():
         return make_response(jsonify(response), 500)
     
 # update the mutable transaction information
-@transactions.route('/Transactions/Transaction_id', methods=['PUT'])
+@transactions.route('/transactions/transaction_id', methods=['PUT'])
 def update_transaction():
     transaction_info = request.json
     id = transaction_info['Transaction_id']
@@ -59,7 +59,7 @@ def update_transaction():
     return jsonify({'message': 'Transaction updated successfully'}), 200
 
 # Delete the transaction info given its ID number
-@transactions.route('/Transactions/<Transaction_id>', methods=['DELETE'])
+@transactions.route('/transactions/<transaction_id>', methods=['DELETE'])
 def delete_transaction(Transaction_id):
     cursor = db.get_db().cursor()
     try:
@@ -71,7 +71,7 @@ def delete_transaction(Transaction_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all transactions based on its Transaction ID
-@transactions.route('/Transactions/<Transaction_id>', methods=['GET'])
+@transactions.route('/transactions/<transaction_id>', methods=['GET'])
 def get_Transaction_Transaction_id(Transaction_id):
     cursor = db.get_db().cursor()
     cursor.execute('SELECT * FROM Transactions where Transaction_id = %s'.format(Transaction_id))
@@ -86,7 +86,7 @@ def get_Transaction_Transaction_id(Transaction_id):
     return the_response
 
 # Get detailed info of all transactions based on its categoryID
-@transactions.route('/Transactions/<CategoryID>', methods=['GET'])
+@transactions.route('/transactions/<categoryID>', methods=['GET'])
 def get_transaction_categoryid(Category_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Transactions where Category_id = %s'.format(Category_id))
@@ -101,7 +101,7 @@ def get_transaction_categoryid(Category_id):
     return the_response
 
 # Get detailed info of all transactions based on its accountID
-@transactions.route('/Transactions/<AccountID>', methods=['GET'])
+@transactions.route('/transactions/<accountID>', methods=['GET'])
 def get_transaction_accountid(Account_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Transactions where Accountid = %s'.format(Account_id))
@@ -116,7 +116,7 @@ def get_transaction_accountid(Account_id):
     return the_response
 
 # Get detailed info of all transactions based on its goalID
-@transactions.route('/Transactions/<GoalID>', methods=['GET'])
+@transactions.route('/transactions/<goalID>', methods=['GET'])
 def get_transaction_goalid(goal_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Transactions where Account_id = %s'.format(goal_id))

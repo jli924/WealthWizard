@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-Categories = Blueprint('Categories', __name__)
+categories = Blueprint('categories', __name__)
 
 # Get all the Categories from the database
-@Categories.route('/Categories', methods=['GET'])
+@categories.route('/categories', methods=['GET'])
 def get_Categories():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Category_id, Name')
@@ -24,7 +24,7 @@ def get_Categories():
     return the_response
 
 # add a new Category to the database
-@Categories.route('/Categories', methods=['POST'])
+@categories.route('/categories', methods=['POST'])
 def create_Category():
     data = request.get_json()  
     # Insert data into database
@@ -43,7 +43,7 @@ def create_Category():
         return make_response(jsonify(response), 500)
     
 # update the Categories information
-@Categories.route('/Categories', methods=['PUT'])
+@categories.route('/categories', methods=['PUT'])
 def update_Category():
     Category_info = request.json
     id = Category_info['Category_id']
@@ -57,7 +57,7 @@ def update_Category():
     return jsonify({'message': 'Category updated successfully'}), 200
 
 # Delete the Categories info given their ID number
-@Categories.route('/Categories/<Category_id>', methods=['DELETE'])
+@categories.route('/categories/<Category_id>', methods=['DELETE'])
 def delete_Category(Category_id):
     cursor = db.get_db().cursor()
     try:
@@ -69,7 +69,7 @@ def delete_Category(Category_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all Categories with a particular Category_ id
-@Categories.route('/Categorys/<Category_id>', methods=['GET'])
+@categories.route('/categorys/<category_id>', methods=['GET'])
 def get_Category(Category_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Categories where Category_id = %s'.format(Category_id))

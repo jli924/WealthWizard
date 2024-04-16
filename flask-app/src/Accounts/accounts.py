@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-Accounts = Blueprint('Accounts', __name__)
+accounts = Blueprint('accounts', __name__)
 
 # Get all the accounts from the database
-@Accounts.route('/Accounts', methods=['GET'])
+@accounts.route('/accounts', methods=['GET'])
 def get_accounts():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Account_id, Balance, AccountType, DateCreated FROM Accounts')
@@ -24,7 +24,7 @@ def get_accounts():
     return the_response
 
 # add a new account to the database
-@Accounts.route('/Accounts', methods=['POST'])
+@accounts.route('/accounts', methods=['POST'])
 def create_account():
     data = request.get_json()  
     # Insert data into database
@@ -43,7 +43,7 @@ def create_account():
         return make_response(jsonify(response), 500)
     
 # update the account's information
-@Accounts.route('/Accounts', methods=['PUT'])
+@accounts.route('/accounts', methods=['PUT'])
 def update_account():
     account_info = request.json
     id = account_info['Account_id']
@@ -59,7 +59,7 @@ def update_account():
     return jsonify({'message': 'Account updated successfully'}), 200
 
 # Delete the account's info given their ID number
-@Accounts.route('/Accounts/<Account_id>', methods=['DELETE'])
+@accounts.route('/accounts/<account_id>', methods=['DELETE'])
 def delete_account(AccountID):
     cursor = db.get_db().cursor()
     try:
@@ -71,7 +71,7 @@ def delete_account(AccountID):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all accoiunts with a particular Account_id
-@Accounts.route('/Accounts/<Account_id>', methods=['GET'])
+@accounts.route('/accounts/<account_id>', methods=['GET'])
 def get_account(Account_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Accounts where Account_id = %s'.format(Account_id))

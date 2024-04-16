@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-goals = Blueprint('Goals', __name__)
+goals = Blueprint('goals', __name__)
 
 # Get all the goals from the database
-@goals.route('/Goals', methods=['GET'])
+@goals.route('/goals', methods=['GET'])
 def get_goals():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Goal_id, Name, Date, TotalFund, SavedSoFar from users')
@@ -24,7 +24,7 @@ def get_goals():
     return the_response
 
 # add a new goal to the database
-@goals.route('/Goals', methods=['POST'])
+@goals.route('/goals', methods=['POST'])
 def create_goal():
     data = request.get_json()  
     # Insert data into database
@@ -43,7 +43,7 @@ def create_goal():
         return make_response(jsonify(response), 500)
     
 # update the goals information
-@goals.route('/Goals', methods=['PUT'])
+@goals.route('/goals', methods=['PUT'])
 def update_goal():
     goal_info = request.json
     id = goal_info['Goal_id']
@@ -60,7 +60,7 @@ def update_goal():
     return jsonify({'message': 'Goal updated successfully'}), 200
 
 # Delete the goal info given their ID number
-@goals.route('/Goals/<Goal_id>', methods=['DELETE'])
+@goals.route('/goals/<goal_id>', methods=['DELETE'])
 def delete_goal(Goal_id):
     cursor = db.get_db().cursor()
     try:
@@ -72,7 +72,7 @@ def delete_goal(Goal_id):
         return make_response(jsonify({'error': str(e)}), 500)
     
 # Get detailed info of goal with a particular goalID
-@goals.route('/Goal/<Goal_id>', methods=['GET'])
+@goals.route('/goal/<goal_id>', methods=['GET'])
 def get_goal(Goal_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Goals where Goal_id = %s'.format(Goal_id))

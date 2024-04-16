@@ -36,9 +36,9 @@ def create_app():
     from src.users.users  import users
     from src.articles.articles import articles
     from src.comments.comments import comments
-    from src.tags.tags import Tags    
-    from src.Accounts.accounts import Accounts
-    from src.categories.categories import Categories
+    from src.tags.tags import tags    
+    from src.Accounts.accounts import accounts
+    from src.categories.categories import categories
     from src.goals.goals import goals
     from src.transactions.transactions  import transactions
     from src.budgets.budgets import budgets
@@ -49,15 +49,15 @@ def create_app():
     # and give a url prefix to each
     app.register_blueprint(users,    url_prefix='/u')
     app.register_blueprint(transactions, url_prefix='/tr')
-    app.register_blueprint(Tags, url_prefix='/ta')
+    app.register_blueprint(tags, url_prefix='/ta')
     app.register_blueprint(investments, url_prefix='/i')
     app.register_blueprint(goals, url_prefix='/g')
     app.register_blueprint(comments, url_prefix='/co')
-    app.register_blueprint(Categories, url_prefix='/ca')
+    app.register_blueprint(categories, url_prefix='/ca')
     app.register_blueprint(budgets, url_prefix='/bu')
     app.register_blueprint(bills, url_prefix='/bi')
     app.register_blueprint(articles, url_prefix='/ar')
-    app.register_blueprint(Accounts, url_prefix='/ac')
+    app.register_blueprint(accounts, url_prefix='/ac')
 
     # Don't forget to return the app object
     return app

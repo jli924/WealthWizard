@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-Tags = Blueprint('Tags', __name__)
+tags = Blueprint('tags', __name__)
 
 # Get all the Tags from the database
-@Tags.route('/Tags', methods=['GET'])
+@tags.route('/tags', methods=['GET'])
 def get_Tags():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT Tag_id, TagName')
@@ -24,7 +24,7 @@ def get_Tags():
     return the_response
 
 # add a new Tag to the database
-@Tags.route('/Tags', methods=['POST'])
+@tags.route('/tags', methods=['POST'])
 def create_Tag():
     data = request.get_json()  
     # Insert data into database
@@ -43,7 +43,7 @@ def create_Tag():
         return make_response(jsonify(response), 500)
     
 # update the Tags information
-@Tags.route('/Tags', methods=['PUT'])
+@tags.route('/tags', methods=['PUT'])
 def update_Tag():
     Tag_info = request.json
     id = Tag_info['Tag_id']
@@ -57,7 +57,7 @@ def update_Tag():
     return jsonify({'message': 'Tag updated successfully'}), 200
 
 # Delete the Tags info given their ID number
-@Tags.route('/Tags/<Tag_id>', methods=['DELETE'])
+@tags.route('/tags/<tag_id>', methods=['DELETE'])
 def delete_Tag(Tag_id):
     cursor = db.get_db().cursor()
     try:
@@ -69,7 +69,7 @@ def delete_Tag(Tag_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all Tags with a particular Tag_ id
-@Tags.route('/Tags/<Tag_id>', methods=['GET'])
+@tags.route('/tags/<tag_id>', methods=['GET'])
 def get_Tag(Tag_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Tags where Tag_id = %s'.format(Tag_id))
