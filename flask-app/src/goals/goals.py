@@ -12,7 +12,7 @@ goals = Blueprint('goals', __name__)
 @goals.route('/goals', methods=['GET'])
 def get_goals():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT Goal_id, Name, Date, TotalFund, SavedSoFar from users')
+    cursor.execute('SELECT Goal_id, Name, Date, TotalFund, SavedSoFar from Goals')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
