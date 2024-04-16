@@ -12,7 +12,7 @@ comments = Blueprint('comments', __name__)
 @comments.route('/comments', methods=['GET'])
 def get_comments():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT Comment_id, CONTENT from comments')
+    cursor.execute('SELECT Comment_id, CONTENT from Comments')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -49,7 +49,7 @@ def update_comment():
     id = comment_info['Comment_id']
     content = comment_info['CONTENT']
 
-    query = 'UPDATE comments SET content = %s where id = %s'
+    query = 'UPDATE Comments SET content = %s where id = %s'
     data = (content, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
