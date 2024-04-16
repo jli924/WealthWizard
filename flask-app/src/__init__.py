@@ -36,12 +36,32 @@ def create_app():
     from src.customers.customers import customers
     from src.products.products  import products
     from src.users.users  import users
+    from src.transactions.transactions  import transactions
+    from src.tags.tags import Tags
+    from src.investments.investments import investments
+    from src.goals.goals import goals
+    from src.comments.comments import comments
+    from src.categories.categories import Categories
+    from src.budgets.budgets import budgets
+    from src.bills.bills import bills
+    from articles.articles import articles
+    from Accounts.accounts import Accounts
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
     app.register_blueprint(customers,   url_prefix='/c')
     app.register_blueprint(products,    url_prefix='/p')
     app.register_blueprint(users,    url_prefix='/u')
+    app.register_blueprint(transactions, url_prefix='/tr')
+    app.register_blueprint(Tags, url_prefix='ta')
+    app.register_blueprint(investments, url_prefix='i')
+    app.register_blueprint(goals, url_prefix='g')
+    app.register_blueprint(comments, url_prefix='co')
+    app.register_blueprint(Categories, url_prefix='ca')
+    app.register_blueprint(budgets, url_prefix='bu')
+    app.register_blueprint(bills, url_prefix='bi')
+    app.register_blueprint(articles, url_prefix='ar')
+    app.register_blueprint(Accounts, url_prefix='ac')
 
     # Don't forget to return the app object
     return app
