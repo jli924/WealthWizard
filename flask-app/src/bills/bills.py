@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-bills = Blueprint('bills', __name__)
+bills = Blueprint('Bills', __name__)
 
 # Get all the bills from the database
 @bills.route('/bills', methods=['GET'])
@@ -70,26 +70,11 @@ def delete_bill(Bill_id):
         db.get_db().rollback()
         return make_response(jsonify({'error': str(e)}), 500)
     
-# Get detailed info of a bill based on its Bill_id
-@bills.route('/bills/<bill_id>', methods=['GET'])
-def get_bill_billid(bill_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Bills where Bill_id = {0}'.format(bill_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-# Get detailed info of all bills based on its Account_id
-# @bills.route('/bills/<account_id>', methods=['GET'])
-# def get_bill_accountid(Account_id):
+# # Get detailed info of a bill based on its Bill_id
+# @bills.route('/bills/<Bill_id>', methods=['GET'])
+# def get_Bill_Bill_id(Bill_id):
 #     cursor = db.get_db().cursor()
-#     cursor.execute('select * from Bills where Account_id = {0}'.format(Account_id))
+#     cursor.execute('select * from Bills where Bill_id = {0}'.format(Bill_id))
 #     row_headers = [x[0] for x in cursor.description]
 #     json_data = []
 #     theData = cursor.fetchall()
@@ -99,6 +84,21 @@ def get_bill_billid(bill_id):
 #     the_response.status_code = 200
 #     the_response.mimetype = 'application/json'
 #     return the_response
+
+#Get detailed info of all bills based on its Account_id
+@bills.route('/bills/<Account_id>', methods=['GET'])
+def get_bill_accountid(Account_id):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Bills where Account_id = {0}'.format(Account_id))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
 # # Get detailed info of all bills based on its Budget_id
 # @bills.route('/bills/<budget_id>', methods=['GET'])
