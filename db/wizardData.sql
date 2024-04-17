@@ -1520,3 +1520,64 @@ insert into AccountInfo (User_id, Account_id) values ('59', '25');
 insert into AccountInfo (User_id, Account_id) values ('41', '30');
 insert into AccountInfo (User_id, Account_id) values ('30', '26');
 insert into AccountInfo (User_id, Account_id) values ('60', '8');
+
+insert into Users
+values (61, "Robert", "R", "Robertson", "rrr@gmail.com", "603-820-2043", "1982-05-31 09:52:36"), 
+(62, "Sally", "S", "Sallyson", "sss@yahoo.com", "251-982-5306", "2000-06-16 08:00:00"), 
+(63,  "Brian", "C", "Cryingson", "bcc@hotmail.com", "207-853-0340", "1992-03-01 11:00:00"), 
+(64,  "Emily", "Y", "Smith", "emily102@reddiff.com", "860-852-8893", "1999-04-01 12:02:00");
+
+insert into Accounts
+values (61, 43, "Checking", "2020-10-01 03:00:00"),
+(62, 7000, "Savings", "2021-03-30 09:52:00"),
+(63, 300, "Savings", "2024-04-15 06:21:00"),
+(64, 42000, "Family", "2002-02-02 03:12:00"),
+(65, 23, "Personal", "2001-02-01 03:13:00"),
+(66, 123000, "Business", "2008-02-23 02:00:00"),
+(67, 2, "Personal", "2008-02-24 02:00:00");
+
+insert into AccountInfo 
+values (61, 61), 
+(61, 62),
+(62, 63),
+(63, 64),
+(63, 65),
+(64, 66),
+(64, 67);
+
+insert into Budgets -- robert, sally, brian
+values (61, 4000.00, 62, 0.05, 6, 4000.00, 0, "Emergency Medical Fund"), 
+(62, 300.00, 61, 20.00, 1, 220.00, 80.00, "Groceries for the month"), 
+(63, 150.00, 62, 0.00, 7, 130.00, 20.00, "Gifts"), 
+(64, 200.00, 63, 0.00, 7, 0.00, 200.00, "Plants"), 
+(65, 300.00, 64, 30.00, 4, 226.00, 74.00, "Kids soccer"), 
+(66, 20.00, 64, 0.00, 4, 19.99, 0.01, "Smokes");
+
+insert into Investments -- robert
+values (61, 62, "Stocks", 1200.00, "Stonks", "2020-04-13 03:00:00"), 
+(62, 62, "Bonds", 20000.00, "Bonks", "2020-04-14 03:00:00");
+
+insert into Bills -- sally, brian
+values (61, "2024-05-01 11:59:59", "Water bill", 63, 64), 
+(62, "2024-04-17 11:59:59", "Car bill", 64, 65), 
+(63, "2024-04-18 11:59:59", "Professional soccer training", 64, 65),
+(64, "2024-04-19 11:59:59", "Lung screening", 64, 66);
+
+insert into Goals -- sally
+values (61, "Buying a venus fly trap", "2024-05-30 12:00:00", 150.00, 25.00), 
+(62, "Flies for venus fly trap", "2024-05-31 12:00:00", 20.00, 20.00);
+
+insert into Transactions -- sally
+values (61, 7, 63, 701.95, NULL, "2024-03-31 15:00:00", "Succulents"), 
+(62, 7, 63, 23.00, 61, "2024-03-29 15:00:00", "Pots"), 
+(63, 7, 63, 302.95, 62, "2024-02-14 15:00:00", "Spider repellent");
+
+insert into Articles -- emily
+values (61, "Women in Business", 64, "Women in business are rad, go business", "2024-01-16 18:00:00"),
+(62, "Bonks and Stonks", 64, "bonk bonk bonk stonk stonk stonk. GO BONKS GO STONKS.", "2024-04-16 19:08:00");
+
+insert into Comments -- emily
+values (61, "Get women more bonks", 61), 
+(62, "I met a woman in business once", 61), 
+(63, "I LOVE stonks", 62), 
+(64, "Should I get more bonks or more stonks? Which one is best?", 62);
