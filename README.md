@@ -1,7 +1,7 @@
 # WealthWizard set up and members
 
 **Members**
-1. Jamie Li
+1. Jamie Li 
 2. Sarah LaCroix
 3. Kriti Gupta
 4. Shreesh Dassarkar
@@ -21,7 +21,9 @@ To set up & run the WealthWizard app:
 1. Navigate to localhost:8080. This should bring you to Appsmith. Login with your credentials.
 1. Clone our UI repository: https://github.com/jli924/WealthWizardUI
 1. Import the repository. 
-1. Deploy the app & enjoy!
+1. Deploy the app & enjoy! 
+1. Navigate between different pages and manage your finances!
+
 
 
 
