@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-bills = Blueprint('bills', __name__)
+bills = Blueprint('Bills', __name__)
 
 # Get all the bills from the database
 @bills.route('/bills', methods=['GET'])
@@ -71,10 +71,10 @@ def delete_bill(Bill_id):
         return make_response(jsonify({'error': str(e)}), 500)
     
 # Get detailed info of a bill based on its Bill_id
-@bills.route('/bills/<bill_id>', methods=['GET'])
-def get_bill_billid(bill_id):
+@bills.route('/bills/<Bill_id>', methods=['GET'])
+def get_Bill_Bill_id(Bill_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Bills where Bill_id = {0}'.format(bill_id))
+    cursor.execute('select * from Bills where Bill_id = {0}'.format(Bill_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
