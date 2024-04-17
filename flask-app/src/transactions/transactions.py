@@ -71,19 +71,19 @@ def delete_transaction(Transaction_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all transactions based on its Transaction ID
-@transactions.route('/transactions/<transaction_id>', methods=['GET'])
-def get_transaction_transaction_id(transaction_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM Transactions where Transaction_id = {0}'.format(transaction_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# @transactions.route('/transactions/<transaction_id>', methods=['GET'])
+# def get_transaction_transaction_id(transaction_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('SELECT * FROM Transactions where Transaction_id = {0}'.format(transaction_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
 
 # Get detailed info of all transactions based on its categoryID
 # @transactions.route('/transactions/<categoryID>', methods=['GET'])
@@ -101,19 +101,19 @@ def get_transaction_transaction_id(transaction_id):
 #     return the_response
 
 # # Get detailed info of all transactions based on its accountID
-# @transactions.route('/transactions/<accountID>', methods=['GET'])
-# def get_transaction_accountid(Account_id):
-#     cursor = db.get_db().cursor()
-#     cursor.execute('select * from Transactions where Accountid = {0}'.format(Account_id))
-#     row_headers = [x[0] for x in cursor.description]
-#     json_data = []
-#     theData = cursor.fetchall()
-#     for row in theData:
-#         json_data.append(dict(zip(row_headers, row)))
-#     the_response = make_response(jsonify(json_data))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response
+@transactions.route('/transactions/<Account_id>', methods=['GET'])
+def get_transaction_accountid(Account_id):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Transactions where Account_id = {0}'.format(Account_id))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
 # # Get detailed info of all transactions based on its goalID
 # @transactions.route('/transactions/<goalID>', methods=['GET'])
