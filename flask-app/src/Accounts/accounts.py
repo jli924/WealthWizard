@@ -71,10 +71,10 @@ def delete_account(AccountID):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all accoiunts with a particular Account_id
-@accounts.route('/accounts/<account_id>', methods=['GET'])
-def get_account(Account_id):
+@accounts.route('/accounts/<user_id>', methods=['GET'])
+def get_account(user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Accounts where Account_id = %s'.format(Account_id))
+    cursor.execute('select * from Accounts where Account_id = %s'.format(user_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
