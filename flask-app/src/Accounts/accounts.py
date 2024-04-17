@@ -89,7 +89,7 @@ def delete_account(AccountID):
 @accounts.route('/accounts/<User_id>', methods=['GET'])
 def get_account_userid(User_id):
    cursor = db.get_db().cursor()
-   cursor.execute('select * from AccountInfo where User_id = {0}'.format(User_id))
+   cursor.execute('SELECT * FROM AccountInfo ai JOIN Users u ON ai.User_id = u.User_id JOIN Accounts a on ai.Account_id = a.Account_id WHERE u.User_id = {0}'.format(User_id))
    row_headers = [x[0] for x in cursor.description]
    json_data = []
    theData = cursor.fetchall()
