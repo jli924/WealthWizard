@@ -73,7 +73,7 @@ def delete_user(user_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all users with a particular userID
-@users.route('/users/<userID>', methods=['GET'])
+@users.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from users where user_id = %s'.format(user_id))
