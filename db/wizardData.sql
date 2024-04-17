@@ -1546,7 +1546,7 @@ values (61, 61),
 (64, 67);
 
 insert into Budgets -- robert, sally, brian
-values (61, 4000.00, 62, 0.05, 6, 4000.00, 0, "Emergency Medical Fund"), 
+values (61, 4000.00, 61, 0.05, 6, 4000.00, 0, "Emergency Medical Fund"), 
 (62, 300.00, 61, 20.00, 1, 220.00, 80.00, "Groceries for the month"), 
 (63, 150.00, 62, 0.00, 7, 130.00, 20.00, "Gifts"), 
 (64, 200.00, 63, 0.00, 7, 0.00, 200.00, "Plants"), 
