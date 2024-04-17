@@ -6,10 +6,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-acinfo = Blueprint('AccountInfo', __name__)
+accountinfo = Blueprint('AccountInfo', __name__)
 
 # Get detailed info of all accounts belonging to a given UserID
-@acinfo.route('/accountinfo/<User_id>', methods=['GET'])
+@accountinfo.route('/accountinfo/<User_id>', methods=['GET'])
 def get_accountid(User_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Accounts a INNER JOIN AccountInfo ai ON a.Account_id = ai.Account_id WHERE ai.User_id = {0}'.format(User_id))
