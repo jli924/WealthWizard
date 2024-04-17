@@ -72,7 +72,7 @@ def delete_goal(Goal_id):
         return make_response(jsonify({'error': str(e)}), 500)
     
 # Get detailed info of goal with a particular goalID
-@goals.route('/goal/<Goal_id>', methods=['GET'])
+@goals.route('/goals/<Goal_id>', methods=['GET'])
 def get_goal(Goal_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Goals where Goal_id = {0}'.format(Goal_id))
