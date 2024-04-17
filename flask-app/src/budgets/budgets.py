@@ -43,8 +43,8 @@ def create_budget():
         return make_response(jsonify(response), 500)
     
 # update the mutable budget information
-@budgets.route('/budgets/Budget_id', methods=['PUT'])
-def update_budget():
+@budgets.route('/budgets/<Budget_id>', methods=['PUT'])
+def update_budget(Budget_id):
     budget_info = request.json
     id = budget_info['Budget_id']
     max_a = budget_info['MaxAmount']
