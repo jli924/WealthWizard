@@ -44,6 +44,7 @@ def create_app():
     from src.budgets.budgets import budgets
     from src.bills.bills import bills
     from src.investments.investments import investments
+    from src.accountinfo.accountinfo import accountinfo
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
@@ -58,6 +59,7 @@ def create_app():
     app.register_blueprint(bills, url_prefix='/bi')
     app.register_blueprint(articles, url_prefix='/ar')
     app.register_blueprint(accounts, url_prefix='/ac')
+    app.register_blueprint(accountinfo, url_prefix='/aci')
 
     # Don't forget to return the app object
     return app
