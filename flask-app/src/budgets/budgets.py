@@ -43,7 +43,7 @@ def create_budget():
         return make_response(jsonify(response), 500)
     
 # update the mutable budget information
-@budgets.route('/budgets/budget_id', methods=['PUT'])
+@budgets.route('/budgets/Budget_id', methods=['PUT'])
 def update_budget():
     budget_info = request.json
     id = budget_info['Budget_id']
@@ -53,7 +53,7 @@ def update_budget():
     spent = budget_info['Spent']
 
     query = 'UPDATE Budgets SET MaxAmount = %s, MinRemaining = %s, Remaining = %s, Spent = %s where Budget_id = %s'
-    data = (max_a, min_r, remain, spent)
+    data = (max_a, min_r, remain, spent, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()

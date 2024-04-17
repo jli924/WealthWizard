@@ -71,22 +71,22 @@ def delete_account(AccountID):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all accoiunts with a particular Account_id
-# @accounts.route('/accounts/<Account_id>', methods=['GET'])
-# def get_account_accountid(Account_id):
-#     cursor = db.get_db().cursor()
-#     cursor.execute('select * from Account where Account_id = {0}'.format(Account_id))
-#     row_headers = [x[0] for x in cursor.description]
-#     json_data = []
-#     theData = cursor.fetchall()
-#     for row in theData:
-#         json_data.append(dict(zip(row_headers, row)))
-#     the_response = make_response(jsonify(json_data))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response
+@accounts.route('/accounts-by-acc/<Account_id>', methods=['GET'])
+def get_account_accountid(Account_id):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Accounts where Account_id = {0}'.format(Account_id))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
 # Get detailed info of all accoiunts with a particular User_id
-@accounts.route('/accounts/<User_id>', methods=['GET'])
+@accounts.route('/accounts-by-user/<User_id>', methods=['GET'])
 def get_account_userid(User_id):
    cursor = db.get_db().cursor()
    cursor.execute('SELECT * FROM AccountInfo ai JOIN Users u ON ai.User_id = u.User_id JOIN Accounts a on ai.Account_id = a.Account_id WHERE u.User_id = {0}'.format(User_id))

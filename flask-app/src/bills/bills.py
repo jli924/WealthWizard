@@ -23,26 +23,21 @@ def get_bills():
     the_response.mimetype = 'application/json'
     return the_response
 
-# Add a new bill to the database
-@bills.route('/bills', methods=['POST'])
-def add_new_bill():
+# Add a new bill to the database based on Account_id
+@bills.route('/bills/Account_id', methods=['POST'])
+def add_new_bill(Account_id):
     
-    # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
 
-    #extracting the variable
-    bill = the_data['Bill_id']
-    acct = the_data['Account_id']
-    budg = the_data['Budget_id']
+    # Extracting the variables
+    # Assuming bill_id and budget_id are not passed in the JSON, as they are auto-incremented
     desc = the_data['Description']
     dueby = the_data['DueBy']
 
     # Constructing the query
-    query = 'INSERT INTO products (Bill_id, Account_id, Budget_id, Description, DueBy) VALUES ('
-    query += '"' + str(bill) + '", '
-    query += '"' + str(acct) + '", '
-    query += '"' + str(budg) + '", '
+    query = 'INSERT INTO products (Account_id, Description, DueBy) VALUES ('
+    query += '"' + str(account_id) + '", '
     query += '"' + desc + '", '
     query += '"' + dueby + '")'
     current_app.logger.info(query)
