@@ -72,7 +72,7 @@ def delete_investments(Investment_id):
         return make_response(jsonify({'error': str(e)}), 500)
     
 # Get detailed info of a investment based on its Investment_id
-@investments.route('/investments/<investment_id>', methods=['GET'])
+@investments.route('/investments/<Investment_id>', methods=['GET'])
 def get_investments_investmentid(Investment_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Investments where Investment_id = {0}'.format(Investment_id))

@@ -71,7 +71,7 @@ def delete_article(article_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all articles with a particular articleID
-@articles.route('/articles/<articleID>', methods=['GET'])
+@articles.route('/articles/<article_id>', methods=['GET'])
 def get_article_articleid(article_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Articles where Article_id = {0}'.format(article_id))

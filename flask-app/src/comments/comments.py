@@ -69,7 +69,7 @@ def delete_comment(Comment_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all comments based on its comment ID
-@comments.route('/comments/<commentID>', methods=['GET'])
+@comments.route('/comments/<Comment_id>', methods=['GET'])
 def get_comment_comment_id(Comment_id):
     cursor = db.get_db().cursor()
     cursor.execute('SELECT * FROM comments where Comment_id = {0}'.format(Comment_id))
