@@ -3,7 +3,7 @@ CREATE DATABASE Magic;
 USE Magic;
 
 CREATE TABLE IF NOT EXISTS Users (
-    User_id int NOT NULL PRIMARY KEY,
+    User_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     FirstName TEXT NOT NULL,
     MiddleName TEXT NOT NULL,
     LastName TEXT NOT NULL,
@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS Users (
 );
 
 CREATE TABLE IF NOT EXISTS Articles (
-    Article_id int NOT NULL PRIMARY KEY,
+    Article_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Title varchar(30) NOT NULL,
     User_id int NOT NULL,
     Content TEXT NOT NULL,
-    UploadDate DATETIME NOT NULL,
+    UploadDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT userArticle
         FOREIGN KEY (User_id)
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Articles (
 );
 
 CREATE TABLE IF NOT EXISTS Comments (
-  Comment_id int PRIMARY KEY NOT NULL,
+  Comment_id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   CONTENT TEXT NOT NULL,
   Article_id int NOT NULL,
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Comments (
 );
 
 CREATE TABLE IF NOT EXISTS Tags (
-  Tag_id int PRIMARY KEY,
+  Tag_id int PRIMARY KEY AUTO_INCREMENT,
   TagName varchar(50) NOT NULL
 );
 
@@ -65,10 +65,10 @@ CREATE TABLE IF NOT EXISTS ArticleTags (
 
 
 CREATE TABLE IF NOT EXISTS Accounts (
-    Account_id int NOT NULL PRIMARY KEY,
+    Account_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Balance int NOT NULL,
     AccountType varchar(50),
-    Date_created DATETIME NOT NULL
+    Date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 
 );
 
@@ -93,12 +93,12 @@ CREATE TABLE IF NOT EXISTS AccountInfo(
 );
 
 CREATE TABLE IF NOT EXISTS Categories (
-    Category_id int NOT NULL PRIMARY KEY,
+    Category_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Name TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Goals (
-    Goal_id int NOT NULL PRIMARY KEY,
+    Goal_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Name TEXT NOT NULL,
     Date DATETIME NOT NULL,
     TotalFund double NOT NULL,
@@ -106,12 +106,12 @@ CREATE TABLE IF NOT EXISTS Goals (
 );
 
 CREATE TABLE IF NOT EXISTS Transactions (
-    Transaction_id int NOT NULL PRIMARY KEY,
+    Transaction_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Category_id int NOT NULL,
     Account_id int NOT NULL,
     Amount double NOT NULL,
     Goal_id int,
-    Date DATETIME NOT NULL,
+    Date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Description TEXT NOT NULL,
 
     CONSTRAINT transactionCategoryID
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS Transactions (
 
 
 CREATE TABLE IF NOT EXISTS Budgets (
-    Budget_id int NOT NULL PRIMARY KEY,
+    Budget_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     MaxAmount double NOT NULL,
     AccountID int NOT NULL,
     MinRemaining double NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS Budgets (
 );
 
 CREATE TABLE IF NOT EXISTS Bills (
-    Bill_id int NOT NULL PRIMARY KEY,
+    Bill_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     DueBy DATETIME NOT NULL,
     Description varchar(50) NOT NULL,
     Account_id int NOT NULL,
@@ -176,12 +176,12 @@ CREATE TABLE IF NOT EXISTS Bills (
 );
 
 CREATE TABLE IF NOT EXISTS Investments (
-    Investment_id int NOT NULL PRIMARY KEY,
+    Investment_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Account_id int NOT NULL,
     Type  varchar(50) NOT NULL,
     Amount double NOT NULL,
     Description TEXT NOT NULL,
-    Date DATETIME NOT NULL,
+    Date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT investmentAccount
                 FOREIGN KEY (Account_id)
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS Investments (
 );
 
 CREATE TABLE IF NOT EXISTS Portfolios (
-    Portfolio_id int NOT NULL PRIMARY KEY,
+    Portfolio_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name varchar(50) NOT NULL,
     Description TEXT NOT NULL
 );
