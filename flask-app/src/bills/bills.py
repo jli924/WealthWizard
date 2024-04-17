@@ -72,9 +72,9 @@ def delete_bill(Bill_id):
     
 # Get detailed info of a bill based on its Bill_id
 @bills.route('/bills/<bill_id>', methods=['GET'])
-def get_bill_billid(Bill_id):
+def get_bill_billid(bill_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Bills where Bill_id = {0}'.format(Bill_id))
+    cursor.execute('select * from Bills where Bill_id = {0}'.format(bill_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

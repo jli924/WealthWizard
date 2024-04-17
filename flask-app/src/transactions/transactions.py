@@ -71,7 +71,7 @@ def delete_transaction(Transaction_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all transactions based on its Transaction ID
-@transactions.route('/transactions/<transaction_id>', methods=['GET'])
+@transactions.route('/transactions/<Transaction_id>', methods=['GET'])
 def get_Transaction_Transaction_id(Transaction_id):
     cursor = db.get_db().cursor()
     cursor.execute('SELECT * FROM Transactions where Transaction_id = {0}'.format(Transaction_id))

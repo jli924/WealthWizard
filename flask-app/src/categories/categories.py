@@ -69,7 +69,7 @@ def delete_Category(Category_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all Categories with a particular Category_ id
-@categories.route('/categorys/<category_id>', methods=['GET'])
+@categories.route('/categorys/<Category_id>', methods=['GET'])
 def get_Category(Category_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Categories where Category_id = {0}'.format(Category_id))
