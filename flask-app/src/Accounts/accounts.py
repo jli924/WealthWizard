@@ -63,7 +63,7 @@ def update_account():
 def delete_account(AccountID):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM Accounts WHERE Account_id = %s', (AccountID))
+        cursor.execute('DELETE FROM Accounts WHERE Account_id = {0}', (AccountID))
         db.get_db().commit()
         return make_response(jsonify({'message': 'User deleted successfully'}), 200)
     except Exception as e:

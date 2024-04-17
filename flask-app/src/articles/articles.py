@@ -74,7 +74,7 @@ def delete_article(article_id):
 @articles.route('/articles/<articleID>', methods=['GET'])
 def get_article_articleid(article_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Articles where Article_id = %s'.format(article_id))
+    cursor.execute('select * from Articles where Article_id = {0}'.format(article_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -86,16 +86,16 @@ def get_article_articleid(article_id):
     return the_response
 
 # Get detailed info of all articles with a particular userID
-@articles.route('/articles/<userID>', methods=['GET'])
-def get_article_userid(user_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Articles where Article_id = %s'.format(user_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# @articles.route('/articles/<userID>', methods=['GET'])
+# def get_article_userid(user_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('select * from Articles where Article_id = {0}'.format(user_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response

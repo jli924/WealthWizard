@@ -75,7 +75,7 @@ def delete_goal(Goal_id):
 @goals.route('/goal/<goal_id>', methods=['GET'])
 def get_goal(Goal_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Goals where Goal_id = %s'.format(Goal_id))
+    cursor.execute('select * from Goals where Goal_id = {0}'.format(Goal_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

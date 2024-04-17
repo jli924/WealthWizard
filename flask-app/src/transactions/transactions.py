@@ -74,7 +74,7 @@ def delete_transaction(Transaction_id):
 @transactions.route('/transactions/<transaction_id>', methods=['GET'])
 def get_Transaction_Transaction_id(Transaction_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM Transactions where Transaction_id = %s'.format(Transaction_id))
+    cursor.execute('SELECT * FROM Transactions where Transaction_id = {0}'.format(Transaction_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -86,46 +86,46 @@ def get_Transaction_Transaction_id(Transaction_id):
     return the_response
 
 # Get detailed info of all transactions based on its categoryID
-@transactions.route('/transactions/<categoryID>', methods=['GET'])
-def get_transaction_categoryid(Category_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Transactions where Category_id = %s'.format(Category_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# @transactions.route('/transactions/<categoryID>', methods=['GET'])
+# def get_transaction_categoryid(Category_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('select * from Transactions where Category_id = {0}'.format(Category_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
 
-# Get detailed info of all transactions based on its accountID
-@transactions.route('/transactions/<accountID>', methods=['GET'])
-def get_transaction_accountid(Account_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Transactions where Accountid = %s'.format(Account_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# # Get detailed info of all transactions based on its accountID
+# @transactions.route('/transactions/<accountID>', methods=['GET'])
+# def get_transaction_accountid(Account_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('select * from Transactions where Accountid = {0}'.format(Account_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
 
-# Get detailed info of all transactions based on its goalID
-@transactions.route('/transactions/<goalID>', methods=['GET'])
-def get_transaction_goalid(goal_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Transactions where Account_id = %s'.format(goal_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# # Get detailed info of all transactions based on its goalID
+# @transactions.route('/transactions/<goalID>', methods=['GET'])
+# def get_transaction_goalid(goal_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('select * from Transactions where Account_id = {0}'.format(goal_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response

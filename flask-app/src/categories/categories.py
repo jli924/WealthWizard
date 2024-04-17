@@ -72,7 +72,7 @@ def delete_Category(Category_id):
 @categories.route('/categorys/<category_id>', methods=['GET'])
 def get_Category(Category_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Categories where Category_id = %s'.format(Category_id))
+    cursor.execute('select * from Categories where Category_id = {0}'.format(Category_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

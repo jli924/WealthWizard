@@ -72,7 +72,7 @@ def delete_Tag(Tag_id):
 @tags.route('/tags/<tag_id>', methods=['GET'])
 def get_Tag(Tag_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Tags where Tag_id = %s'.format(Tag_id))
+    cursor.execute('select * from Tags where Tag_id = {0}'.format(Tag_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

@@ -74,7 +74,7 @@ def delete_bill(Bill_id):
 @bills.route('/bills/<bill_id>', methods=['GET'])
 def get_bill_billid(Bill_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Bills where Bill_id = %s'.format(Bill_id))
+    cursor.execute('select * from Bills where Bill_id = {0}'.format(Bill_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -86,31 +86,31 @@ def get_bill_billid(Bill_id):
     return the_response
 
 # Get detailed info of all bills based on its Account_id
-@bills.route('/bills/<account_id>', methods=['GET'])
-def get_bill_accountid(Account_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Bills where Account_id = %s'.format(Account_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# @bills.route('/bills/<account_id>', methods=['GET'])
+# def get_bill_accountid(Account_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('select * from Bills where Account_id = {0}'.format(Account_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
 
-# Get detailed info of all bills based on its Budget_id
-@bills.route('/bills/<budget_id>', methods=['GET'])
-def get_bill_budgetid(Budget_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Bills where Budget_id = %s'.format(Budget_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# # Get detailed info of all bills based on its Budget_id
+# @bills.route('/bills/<budget_id>', methods=['GET'])
+# def get_bill_budgetid(Budget_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('select * from Bills where Budget_id = {0}'.format(Budget_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
