@@ -31,8 +31,8 @@ def create_user():
     try:
         cursor = db.get_db().cursor()
         cursor.execute(
-            'INSERT INTO users (user_id, firstname, lastname, email, phone, birthdate) VALUES (%s, %s, %s, %s, %s, %s)',
-            (data.get('user_id'), data.get('firstname'), data.get('lastname'), data.get('email'), data.get('phone'), data.get('birthdate'))
+            'INSERT INTO users (User_id, FirstName, LastName, Email, Phone, BirthDate) VALUES (%s, %s, %s, %s, %s, %s)',
+            (data.get('User_id'), data.get('FirstName'), data.get('LastName'), data.get('Email'), data.get('Phone'), data.get('BirthDate'))
         )
         db.get_db().commit()
         response = {"message": "User created successfully"}
@@ -46,14 +46,14 @@ def create_user():
 @users.route('/users', methods=['PUT'])
 def update_user():
     user_info = request.json
-    id = user_info['user_id']
-    first = user_info['firstname']
-    last = user_info['lastname']
-    email = user_info['email']
-    phone = user_info['phone']
-    birth = user_info['birthdate']
+    id = user_info['User_id']
+    first = user_info['FirstName']
+    last = user_info['LastName']
+    email = user_info['Email']
+    phone = user_info['Phone']
+    birth = user_info['BirthDate']
 
-    query = 'UPDATE users SET firstname = %s, lastname = %s, email = %s, phone = %s, birthdate = %s where id = %s'
+    query = 'UPDATE Users SET FirstName = %s, LastName = %s, Email = %s, Phone = %s, BirthDate = %s where User_id = %s'
     data = (first, last, email, phone, birth, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
@@ -65,7 +65,7 @@ def update_user():
 def delete_user(user_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM users WHERE user_id = %s'.format(user_id))
+        cursor.execute('DELETE FROM users WHERE User_id = %s'.format(user_id))
         db.get_db().commit()
         return make_response(jsonify({'message': 'User deleted successfully'}), 200)
     except Exception as e:
@@ -76,7 +76,7 @@ def delete_user(user_id):
 @users.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from users where user_id = %s'.format(user_id))
+    cursor.execute('select * from Users where User_id = %s'.format(user_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -86,5 +86,3 @@ def get_user(user_id):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
-
-
