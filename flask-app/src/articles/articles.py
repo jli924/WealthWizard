@@ -70,26 +70,11 @@ def delete_article(article_id):
         db.get_db().rollback()
         return make_response(jsonify({'error': str(e)}), 500)
 
-# Get detailed info of all articles with a particular articleID
-@articles.route('/articles/<article_id>', methods=['GET'])
-def get_article_articleid(article_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Articles where Article_id = {0}'.format(article_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-# Get detailed info of all articles with a particular userID
-# @articles.route('/articles/<userID>', methods=['GET'])
-# def get_article_userid(user_id):
+# # Get detailed info of all articles with a particular articleID
+# @articles.route('/articles/<article_id>', methods=['GET'])
+# def get_article_articleid(article_id):
 #     cursor = db.get_db().cursor()
-#     cursor.execute('select * from Articles where Article_id = {0}'.format(user_id))
+#     cursor.execute('select * from Articles where Article_id = {0}'.format(article_id))
 #     row_headers = [x[0] for x in cursor.description]
 #     json_data = []
 #     theData = cursor.fetchall()
@@ -99,3 +84,18 @@ def get_article_articleid(article_id):
 #     the_response.status_code = 200
 #     the_response.mimetype = 'application/json'
 #     return the_response
+
+# Get detailed info of all articles with a particular userID
+@articles.route('/articles/<user_id>', methods=['GET'])
+def get_article_userid(user_id):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Articles where User_id = {0}'.format(user_id))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
