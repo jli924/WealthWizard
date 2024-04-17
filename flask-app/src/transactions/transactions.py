@@ -72,9 +72,9 @@ def delete_transaction(Transaction_id):
 
 # Get detailed info of all transactions based on its Transaction ID
 @transactions.route('/transactions/<transaction_id>', methods=['GET'])
-def get_Transaction_Transaction_id(Transaction_id):
+def get_transaction_transaction_id(transaction_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM Transactions where Transaction_id = {0}'.format(Transaction_id))
+    cursor.execute('SELECT * FROM Transactions where Transaction_id = {0}'.format(transaction_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
