@@ -1567,10 +1567,15 @@ insert into Goals -- sally
 values (61, "Buying a venus fly trap", "2024-05-30 12:00:00", 150.00, 25.00), 
 (62, "Flies for venus fly trap", "2024-05-31 12:00:00", 20.00, 20.00);
 
-insert into Transactions -- sally
+insert into Transactions -- sally and emily
 values (61, 7, 63, 701.95, NULL, "2024-03-31 15:00:00", "Succulents"), 
 (62, 7, 63, 23.00, 61, "2024-03-29 15:00:00", "Pots"), 
-(63, 7, 63, 10.00, 62, "2024-02-14 15:00:00", "Spider repellent");
+(63, 7, 63, 10.00, 62, "2024-02-14 15:00:00", "Spider repellent"),
+(64, 7, 67, 230000.00, NULL, "2024-02-17 12:00:00", "Bought a Birkin"),
+(65, 7, 67, 4000.00, NULL, "2023-06-19 17:00:00", "Bought an expensive dress"),
+(66, 7, 67, 2300.00, NULL, "2023-01-18 19:00:00", "Bought skincare and makeup");
+
+
 
 insert into Articles -- emily
 values (61, "Women in Business", 64, "Women in business are rad, go business", "2024-01-16 18:00:00"),
