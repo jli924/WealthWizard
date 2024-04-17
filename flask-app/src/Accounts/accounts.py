@@ -74,7 +74,7 @@ def delete_account(AccountID):
 @accounts.route('/accounts/<user_id>', methods=['GET'])
 def get_account(user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Accounts where Account_id = %s'.format(user_id))
+    cursor.execute('select * from Accounts where User_id = %s'.format(user_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
