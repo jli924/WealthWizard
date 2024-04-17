@@ -36,10 +36,10 @@ def add_new_bill(Account_id):
     dueby = the_data['DueBy']
 
     # Constructing the query
-    query = 'INSERT INTO Bills (Account_id, Description, DueBy) VALUES ('
+    query = 'INSERT INTO Bills (Account_id, Description, DueBy, Budget_id) VALUES ('
     query += '"' + str(Account_id) + '", '
     query += '"' + desc + '", '
-    query += '"' + dueby + '")'
+    query += '"' + dueby + '", 1)'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 

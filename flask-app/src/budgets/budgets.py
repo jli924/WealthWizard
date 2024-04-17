@@ -53,7 +53,7 @@ def update_budget(Budget_id):
     spent = budget_info['Spent']
 
     query = 'UPDATE Budgets SET MaxAmount = %s, MinRemaining = %s, Remaining = %s, Spent = %s where Budget_id = %s'
-    data = (max_a, min_r, remain, spent, Budget_id)
+    data = (max_a, min_r, remain, spent, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
