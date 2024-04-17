@@ -69,7 +69,7 @@ def delete_Tag(Tag_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all Tags with a particular Tag_ id
-@tags.route('/tags/<tag_id>', methods=['GET'])
+@tags.route('/tags/<t ag_id>', methods=['GET'])
 def get_Tag(Tag_id):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Tags where Tag_id = %s'.format(Tag_id))
