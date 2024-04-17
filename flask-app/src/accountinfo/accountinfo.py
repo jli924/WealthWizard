@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-acinfo = Blueprint('AccountInfo', __name__):
+acinfo = Blueprint('AccountInfo', __name__)
 
 # Get detailed info of all accounts belonging to a given UserID
 @acinfo.route('/accountinfo/<user_id>', methods=['GET'])
