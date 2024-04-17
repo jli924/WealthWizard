@@ -2,7 +2,7 @@
 Bills blueprint
 """
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -25,22 +25,34 @@ def get_bills():
 
 # Add a new bill to the database
 @bills.route('/bills', methods=['POST'])
-def create_bill():
-    data = request.get_json()  
-    # Insert data into database
-    try:
-        cursor = db.get_db().cursor()
-        cursor.execute(
-            'INSERT INTO Bills (Bill_id, DueBy, Description, Account_id, Budget_id) VALUES (%s, %s, %s, %s, %s)',
-            (data.get('Bill_id'), data.get('DueBy'), data('Description'), data.get('Account_id'), data.get('Budget_id'))
-        )
-        db.get_db().commit()
-        response = {"message": "Bill created successfully"}
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        response = {"error": str(e)}
-        return make_response(jsonify(response), 500)
+def add_new_bill():
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    bill = the_data['Bill_id']
+    acct = the_data['Account_id']
+    budg = the_data['Budget_id']
+    desc = the_data['Description']
+    dueby = the_data['DueBy']
+
+    # Constructing the query
+    query = 'INSERT INTO products (Bill_id, Account_id, Budget_id, Description, DueBy) VALUES ('
+    query += '"' + str(bill) + '", '
+    query += '"' + str(acct) + '", '
+    query += '"' + str(budg) + '", '
+    query += '"' + desc + '", '
+    query += '"' + dueby + '")'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
     
 
 # update the mutable bill information
@@ -59,11 +71,11 @@ def update_bill():
     return jsonify({'message': 'Bill updated successfully'}), 200
 
 # Delete the bill info given its ID number
-@bills.route('/bills/<bill_id>', methods=['DELETE'])
+@bills.route('/bills/<Bill_id>', methods=['DELETE'])
 def delete_bill(Bill_id):
     cursor = db.get_db().cursor()
     try:
-        cursor.execute('DELETE FROM Bills WHERE Bill_id = %s'.format(Bill_id))
+        cursor.execute('DELETE FROM Bills WHERE Bill_id = {0}'.format(Bill_id))
         db.get_db().commit()
         return make_response(jsonify({'message': 'Bill deleted successfully'}), 200)
     except Exception as e:
