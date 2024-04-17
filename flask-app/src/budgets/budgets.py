@@ -75,7 +75,7 @@ def delete_budget(budget_id):
 @budgets.route('/budgets-by-budget/<Budget_id>', methods=['GET'])
 def get_budget_budgetid(Budget_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Budgets where Budget_id = {0}'.format(budget_id))
+    cursor.execute('select * from Budgets where Budget_id = {0}'.format(Budget_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
