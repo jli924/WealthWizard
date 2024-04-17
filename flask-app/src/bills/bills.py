@@ -24,7 +24,7 @@ def get_bills():
     return the_response
 
 # Add a new bill to the database based on Account_id
-@bills.route('/bills/Account_id', methods=['POST'])
+@bills.route('/bills/<Account_id>', methods=['POST'])
 def add_new_bill(Account_id):
     
     the_data = request.json
@@ -36,8 +36,8 @@ def add_new_bill(Account_id):
     dueby = the_data['DueBy']
 
     # Constructing the query
-    query = 'INSERT INTO products (Account_id, Description, DueBy) VALUES ('
-    query += '"' + str(account_id) + '", '
+    query = 'INSERT INTO Bills (Account_id, Description, DueBy) VALUES ('
+    query += '"' + str(Account_id) + '", '
     query += '"' + desc + '", '
     query += '"' + dueby + '")'
     current_app.logger.info(query)
