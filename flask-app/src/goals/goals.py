@@ -86,7 +86,7 @@ def delete_goal(Goal_id):
 #     the_response.mimetype = 'application/json'
 #     return the_response
 
-# Get detailed info of all accounts belonging to a given UserID
+# Get detailed info of all accounts belonging to a given accountID
 @goals.route('/goals/<Account_id>', methods=['GET'])
 def get_goals_accountid(Account_id):
     cursor = db.get_db().cursor()
