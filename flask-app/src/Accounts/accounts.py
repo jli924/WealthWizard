@@ -86,10 +86,10 @@ def delete_account(AccountID):
 #     return the_response
 
 # Get detailed info of all accoiunts with a particular User_id
-@accounts.route('/accounts/<user_id>', methods=['GET'])
-def get_account_userid(user_id):
+@accounts.route('/accounts/<User_id>', methods=['GET'])
+def get_account_userid(User_id):
    cursor = db.get_db().cursor()
-   cursor.execute('select * from AccountInfo where User_id = %s'.format(user_id))
+   cursor.execute('select * from AccountInfo where User_id = {0}'.format(User_id))
    row_headers = [x[0] for x in cursor.description]
    json_data = []
    theData = cursor.fetchall()
