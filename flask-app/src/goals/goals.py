@@ -71,11 +71,26 @@ def delete_goal(Goal_id):
         db.get_db().rollback()
         return make_response(jsonify({'error': str(e)}), 500)
     
-# Get detailed info of goal with a particular goalID
-@goals.route('/goals/<Goal_id>', methods=['GET'])
-def get_goal(Goal_id):
+# Get detailed info of goal with a particular Account_id
+# @goals.route('/goals/<Account_id>', methods=['GET'])
+# def get_goal(Account_id):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('select * from Goals where Account_id = {0}'.format(Account_id))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
+
+# Get detailed info of all accounts belonging to a given UserID
+@goals.route('/goals/<Account_id>', methods=['GET'])
+def get_goals_accountid(Account_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Goals where Goal_id = {0}'.format(Goal_id))
+    cursor.execute('select * from Goals g LEFT OUTER JOIN Transactions tr ON g.Goal_id = tr.Goal_id WHERE tr.Account_id = {0}'.format(Account_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

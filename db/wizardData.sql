@@ -1570,7 +1570,7 @@ values (61, "Buying a venus fly trap", "2024-05-30 12:00:00", 150.00, 25.00),
 insert into Transactions -- sally
 values (61, 7, 63, 701.95, NULL, "2024-03-31 15:00:00", "Succulents"), 
 (62, 7, 63, 23.00, 61, "2024-03-29 15:00:00", "Pots"), 
-(63, 7, 63, 302.95, 62, "2024-02-14 15:00:00", "Spider repellent");
+(63, 7, 63, 10.00, 62, "2024-02-14 15:00:00", "Spider repellent");
 
 insert into Articles -- emily
 values (61, "Women in Business", 64, "Women in business are rad, go business", "2024-01-16 18:00:00"),
