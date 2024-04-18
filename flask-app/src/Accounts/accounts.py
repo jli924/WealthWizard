@@ -28,15 +28,17 @@ def get_accounts():
 def get_max_accountid():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT MAX(Account_id) AS Account_id FROM Accounts')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
+    max_row = cursor.fetchone()
+    max_id = max_row['Account_id']
+
+    # +1
+    next_id = max_id + 1
+    json_data = {'next_id': next_id}
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+    
 
 # add a new account to the database
 @accounts.route('/accounts/<User_id>', methods=['POST'])
