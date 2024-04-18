@@ -33,10 +33,12 @@ def create_transaction(Account_id):
     # Assuming transaction_id and date are not passed in the JSON, as they are auto-incremented
     Amount = the_data['Amount']
     desc = the_data['Description']
+    catID = the_data['Category']
 
     # Constructing the query
     query = 'INSERT INTO Transactions (Amount, Category_id, Description, Account_id) VALUES ('
-    query += '"' + str(Amount) + '", 1, '
+    query += '"' + str(Amount) + '", '
+    query += '"' + str(catID) + '", '
     query += '"' + desc + '", '
     query += '"' + str(Account_id) + '")'
     current_app.logger.info(query)
