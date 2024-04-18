@@ -29,7 +29,7 @@ def get_max_accountid():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT MAX(Account_id) AS Account_id FROM Accounts')
     max_row = cursor.fetchone()
-    max_id = max_row['Account_id']
+    max_id = max_row[0]
 
     # +1
     next_id = max_id + 1
