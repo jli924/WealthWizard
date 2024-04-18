@@ -70,7 +70,8 @@ def add_new_budget(AccountID):
     query = 'INSERT INTO Budgets (AccountID, MaxAmount, MadeFor, CategoryID, MinRemaining, Remaining, Spent) VALUES ('
     query += '"' + str(AccountID) + '", '
     query += '"' + str(max_a) + '", '
-    query += '"' + madefor + '", 1, 1.00, 1.00, 0.00)'
+    query += '"' + madefor + '", 1, 1.00, '
+    query += '"' + str(max_a) + '", 0.00)'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
