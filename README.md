@@ -18,11 +18,10 @@ To set up & run the WealthWizard app:
 1. Start the containers with `docker compose up`.  To run in detached mode, run `docker compose up -d`. 
 
 ## Appsmith & UI
-1. Navigate to localhost:8080. This should bring you to Appsmith. Login with your credentials.
-1. Clone our UI repository: https://github.com/jli924/WealthWizardUI
-1. Import the repository. 
-1. Deploy the app & enjoy! 
-1. Navigate between different pages and manage your finances!
+1. Go to our UI repository: https://github.com/jli924/WealthWizardUI
+2. Scroll down to the README.md file and click "View application"
+3. Navigate between different pages and manage your finances!
+  a. When navigating between different pages, be sure to always go back to the home page first or data may not show up properly.
 
 
 
