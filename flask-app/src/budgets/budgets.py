@@ -23,6 +23,36 @@ def get_budgets():
     the_response.mimetype = 'application/json'
     return the_response
 
+# Get detailed info of all budgets based on its budgetID
+@budgets.route('/budgets-by-budget/<Budget_id>', methods=['GET'])
+def get_budget_budgetid(Budget_id):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Budgets where Budget_id = {0}'.format(Budget_id))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# # Get detailed info of all budgets based on its accountID
+@budgets.route('/budgets/<AccountID>', methods=['GET'])
+def get_budget_accountid(AccountID):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Budgets where AccountID = {0}'.format(AccountID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
 # Add a new budget to the database
 @budgets.route('/budgets/<AccountID>', methods=['POST']) 
 def add_new_budget(AccountID):
@@ -67,59 +97,4 @@ def update_budget(Budget_id):
     db.get_db().commit()
     return jsonify({'message': 'Budget updated successfully'}), 200
 
-# Delete the budget info given its ID number
-@budgets.route('/budgets/<budget_id>', methods=['DELETE'])
-def delete_budget(budget_id):
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute('DELETE FROM Budgets WHERE Budget_id = %s'.format(budget_id))
-        db.get_db().commit()
-        return make_response(jsonify({'message': 'Budget deleted successfully'}), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        return make_response(jsonify({'error': str(e)}), 500)
 
-# Get detailed info of all budgets based on its budgetID
-@budgets.route('/budgets-by-budget/<Budget_id>', methods=['GET'])
-def get_budget_budgetid(Budget_id):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Budgets where Budget_id = {0}'.format(Budget_id))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-# Get detailed info of all budgets based on its categoryID
-# @budgets.route('/budgets/<categoryID>', methods=['GET'])
-# def get_budget_categoryid(categoryid):
-#     cursor = db.get_db().cursor()
-#     cursor.execute('select * from Budgets where CategoryID = {0}'.format(categoryid))
-#     row_headers = [x[0] for x in cursor.description]
-#     json_data = []
-#     theData = cursor.fetchall()
-#     for row in theData:
-#         json_data.append(dict(zip(row_headers, row)))
-#     the_response = make_response(jsonify(json_data))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response
-
-# # Get detailed info of all budgets based on its accountID
-@budgets.route('/budgets/<AccountID>', methods=['GET'])
-def get_budget_accountid(AccountID):
-    cursor = db.get_db().cursor()
-    cursor.execute('select * from Budgets where AccountID = {0}'.format(AccountID))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
