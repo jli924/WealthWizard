@@ -27,7 +27,7 @@ def get_accounts():
 @accounts.route('/accounts-max', methods=['GET'])
 def get_max_accountid():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT MAX(Account_id) FROM Accounts AS Account_id')
+    cursor.execute('SELECT MAX(Account_id) AS Account_id FROM Accounts')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
