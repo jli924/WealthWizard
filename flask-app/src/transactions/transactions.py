@@ -2,7 +2,7 @@
 transactions blueprint
 """
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -24,23 +24,45 @@ def get_transactions():
     return the_response
 
 # Add a new transaction to the database
-@transactions.route('/transactions', methods=['POST'])
-def create_transaction():
-    data = request.get_json()  
-    # Insert data into database
-    try:
-        cursor = db.get_db().cursor()
-        cursor.execute(
-            'INSERT INTO Transactions (Transaction_id, Amount, Date, Description) VALUES (%s, %s, %s, %s)',
-            (data.get('Transaction_id'), data.get('amount'), data.get('date'), data.get('Description'))
-        )
-        db.get_db().commit()
-        response = {"message": "Transaction created successfully"}
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        response = {"error": str(e)}
-        return make_response(jsonify(response), 500)
+@transactions.route('/transactions/<Account_id>', methods=['POST'])
+def create_transaction(Account_id):
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    # Assuming transaction_id and date are not passed in the JSON, as they are auto-incremented
+    Amount = the_data['Amount']
+    desc = the_data['Description']
+
+    # Constructing the query
+    query = 'INSERT INTO Transactions (Amount, Category_id, Description, Account_id) VALUES ('
+    query += '"' + str(Amount) + '", 1, '
+    query += '"' + desc + '", '
+    query += '"' + str(Account_id) + '")'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+    
+    # data = request.get_json()  
+    # # Insert data into database
+    # try:
+    #     cursor = db.get_db().cursor()
+    #     cursor.execute(
+    #         'INSERT INTO Transactions (Transaction_id, Amount, Date, Description, Category_id) VALUES (%s, %s, %s, %s, %s)',
+    #         (data.get('Transaction_id'), data.get('Amount'), data.get('Date'), data.get('Description'), data.get('Category_id'))
+    #     )
+    #     db.get_db().commit()
+    #     response = {"message": "Transaction created successfully"}
+    #     return make_response(jsonify(response), 200)
+    # except Exception as e:
+    #     db.get_db().rollback()
+    #     response = {"error": str(e)}
+    #     return make_response(jsonify(response), 500)
     
 # update the mutable transaction information
 @transactions.route('/transactions/transaction_id', methods=['PUT'])

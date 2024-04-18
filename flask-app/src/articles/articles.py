@@ -2,7 +2,7 @@
 Articles blueprint
 """
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -24,23 +24,44 @@ def get_articles():
     return the_response
 
 # add a new article to the database
-@articles.route('/articles', methods=['POST'])
-def create_article():
-    data = request.get_json()  
-    # Insert data into database
-    try:
-        cursor = db.get_db().cursor()
-        cursor.execute(
-            'INSERT INTO articles (Article_id, Title, Content, UploadDate) VALUES (%s, %s, %s, %s)',
-            (data.get('Article_id'), data.get('Title'), data.get('Content'), data.get('UploadDate'))
-        )
-        db.get_db().commit()
-        response = {"message": "Article created successfully"}
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        response = {"error": str(e)}
-        return make_response(jsonify(response), 500)
+@articles.route('/articles/<User_id>', methods=['POST'])
+def create_article(User_id):
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    # Assuming transaction_id and date are not passed in the JSON, as they are auto-incremented
+    title = the_data['Title']
+    content = the_data['Content']
+
+    # Constructing the query
+    query = 'INSERT INTO Articles (User_id, Content, Title) VALUES ('
+    query += '"' + str(User_id) + '", '
+    query += '"' + content + '", '
+    query += '"' + title + '")'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+    # data = request.get_json()  
+    # # Insert data into database
+    # try:
+    #     cursor = db.get_db().cursor()
+    #     cursor.execute(
+    #         'INSERT INTO articles (Article_id, Title, Content, UploadDate) VALUES (%s, %s, %s, %s)',
+    #         (data.get('Article_id'), data.get('Title'), data.get('Content'), data.get('UploadDate'))
+    #     )
+    #     db.get_db().commit()
+    #     response = {"message": "Article created successfully"}
+    #     return make_response(jsonify(response), 200)
+    # except Exception as e:
+    #     db.get_db().rollback()
+    #     response = {"error": str(e)}
+    #     return make_response(jsonify(response), 500)
     
 # update the articles information
 @articles.route('/articles', methods=['PUT'])
