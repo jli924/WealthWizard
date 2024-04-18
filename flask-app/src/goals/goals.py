@@ -2,7 +2,7 @@
 goals blueprint
 """
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -24,23 +24,46 @@ def get_goals():
     return the_response
 
 # add a new goal to the database
-@goals.route('/goals', methods=['POST'])
-def create_goal():
-    data = request.get_json()  
-    # Insert data into database
-    try:
-        cursor = db.get_db().cursor()
-        cursor.execute(
-            'INSERT INTO Goals (Goal_id, Name, Date, TotalFund, SavedSoFar) VALUES (%s, %s, %s, %s, %s)',
-            (data.get('Goal_id'), data.get('Name'), data.get('Date'), data.get('TotalFund'), data.get('SavedSoFar'))
-        )
-        db.get_db().commit()
-        response = {"message": "Goal created successfully"}
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        response = {"error": str(e)}
-        return make_response(jsonify(response), 500)
+@goals.route('/goals/<Account_id>', methods=['POST'])
+def create_goal(Account_id):
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    # Assuming Account_id and SavedSoFar are not passed in the JSON, as they are auto-incremented/default of 0
+    name = the_data['Name']
+    date = the_data['Date']
+    totalFund = the_data['TotalFund']
+
+    # Constructing the query
+    query = 'INSERT INTO Goals (Account_id, Name, Date, TotalFund, SavedSoFar) VALUES ('
+    query += '"' + str(Account_id) + '", '
+    query += '"' + name + '", '
+    query += '"' + str(date) + '", '
+    query += '"' + str(totalFund) + '", 0.00)'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+    # data = request.get_json()  
+    # # Insert data into database
+    # try:
+    #     cursor = db.get_db().cursor()
+    #     cursor.execute(
+    #         'INSERT INTO Goals (Goal_id, Name, Date, TotalFund, SavedSoFar) VALUES (%s, %s, %s, %s, %s)',
+    #         (data.get('Goal_id'), data.get('Name'), data.get('Date'), data.get('TotalFund'), data.get('SavedSoFar'))
+    #     )
+    #     db.get_db().commit()
+    #     response = {"message": "Goal created successfully"}
+    #     return make_response(jsonify(response), 200)
+    # except Exception as e:
+    #     db.get_db().rollback()
+    #     response = {"error": str(e)}
+    #     return make_response(jsonify(response), 500)
     
 # update the goals information
 @goals.route('/goals', methods=['PUT'])
@@ -90,7 +113,7 @@ def delete_goal(Goal_id):
 @goals.route('/goals/<Account_id>', methods=['GET'])
 def get_goals_accountid(Account_id):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Goals g LEFT OUTER JOIN Transactions tr ON g.Goal_id = tr.Goal_id WHERE tr.Account_id = {0}'.format(Account_id))
+    cursor.execute('SELECT * FROM Goals WHERE Account_id = {0}'.format(Account_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
