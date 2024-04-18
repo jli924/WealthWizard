@@ -65,6 +65,7 @@ def add_new_budget(AccountID):
     max_a = the_data['MaxAmount']
     madefor = the_data['MadeFor']
     catID = the_data["Category"]
+    min_a = the_data["MinRemaining"]
 
 
     # Constructing the query
@@ -72,7 +73,8 @@ def add_new_budget(AccountID):
     query += '"' + str(AccountID) + '", '
     query += '"' + str(max_a) + '", '
     query += '"' + madefor + '", '
-    query += '"' + str(catID) + '", 1.00, '
+    query += '"' + str(catID) + '", '
+    query += '"' + str(min_a) + '", '
     query += '"' + str(max_a) + '", 0.00)'
     current_app.logger.info(query)
 
