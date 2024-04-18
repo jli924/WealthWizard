@@ -28,7 +28,7 @@ def add_new_accountinfo(User_id):
     
     the_data = request.json
     current_app.logger.info(the_data)
-    accID = the_data['Account_id']
+    accID = the_data['Account_id'] + 1
     
     # Constructing the query
     query = 'INSERT INTO AccountInfo (User_id, Account_id) VALUES ('

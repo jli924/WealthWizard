@@ -39,7 +39,7 @@ def get_accounts():
 #     return the_response
 
 @accounts.route('/accounts-max', methods=['GET'])
-def get_accounts():
+def get_max_accountid():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT MAX(Account_id) AS Account_id FROM Accounts')
     row_headers = [x[0] for x in cursor.description]
