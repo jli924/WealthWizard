@@ -47,22 +47,7 @@ def add_new_account():
     db.get_db().commit()
     
     return 'Success!'
-# def create_account():
-#     data = request.get_json()  
-#     # Insert data into database
-#     try:
-#         cursor = db.get_db().cursor()
-#         cursor.execute(
-#             'INSERT INTO Accounts (Account_id, Balance, AccountType, Date_created) VALUES (%s, %s, %s, %s)',
-#             (data['Account_id'], data.get('Balance'), data['AccountType'], data.get('Date_created'))
-#         )
-#         db.get_db().commit()
-#         response = {"message": "Account created successfully"}
-#         return make_response(jsonify(response), 200)
-#     except Exception as e:
-#         db.get_db().rollback()
-#         response = {"error": str(e)}
-#         return make_response(jsonify(response), 500)
+
     
 # update the account's information
 @accounts.route('/accounts', methods=['PUT'])

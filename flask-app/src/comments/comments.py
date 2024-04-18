@@ -82,18 +82,3 @@ def get_comment_comment_id(Comment_id):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
-
-# Get detailed info of all comments based on its accountID
-# @comments.route('/comments/<accountID>', methods=['GET'])
-# def get_comment_accountid(Account_id):
-#     cursor = db.get_db().cursor()
-#     cursor.execute('select * from comments where account_id = {0}'.format(Account_id))
-#     row_headers = [x[0] for x in cursor.description]
-#     json_data = []
-#     theData = cursor.fetchall()
-#     for row in theData:
-#         json_data.append(dict(zip(row_headers, row)))
-#     the_response = make_response(jsonify(json_data))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response

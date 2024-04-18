@@ -30,7 +30,6 @@ def create_goal(Account_id):
     current_app.logger.info(the_data)
 
     # Extracting the variables
-    # Assuming Account_id and SavedSoFar are not passed in the JSON, as they are auto-incremented/default of 0
     name = the_data['Name']
     date = the_data['Date']
     totalFund = the_data['TotalFund']
@@ -49,21 +48,6 @@ def create_goal(Account_id):
     db.get_db().commit()
     
     return 'Success!'
-    # data = request.get_json()  
-    # # Insert data into database
-    # try:
-    #     cursor = db.get_db().cursor()
-    #     cursor.execute(
-    #         'INSERT INTO Goals (Goal_id, Name, Date, TotalFund, SavedSoFar) VALUES (%s, %s, %s, %s, %s)',
-    #         (data.get('Goal_id'), data.get('Name'), data.get('Date'), data.get('TotalFund'), data.get('SavedSoFar'))
-    #     )
-    #     db.get_db().commit()
-    #     response = {"message": "Goal created successfully"}
-    #     return make_response(jsonify(response), 200)
-    # except Exception as e:
-    #     db.get_db().rollback()
-    #     response = {"error": str(e)}
-    #     return make_response(jsonify(response), 500)
     
 # update the goals information
 @goals.route('/goals', methods=['PUT'])
@@ -93,21 +77,7 @@ def delete_goal(Goal_id):
     except Exception as e:
         db.get_db().rollback()
         return make_response(jsonify({'error': str(e)}), 500)
-    
-# Get detailed info of goal with a particular Account_id
-# @goals.route('/goals/<Account_id>', methods=['GET'])
-# def get_goal(Account_id):
-#     cursor = db.get_db().cursor()
-#     cursor.execute('select * from Goals where Account_id = {0}'.format(Account_id))
-#     row_headers = [x[0] for x in cursor.description]
-#     json_data = []
-#     theData = cursor.fetchall()
-#     for row in theData:
-#         json_data.append(dict(zip(row_headers, row)))
-#     the_response = make_response(jsonify(json_data))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response
+
 
 # Get detailed info of all accounts belonging to a given accountID
 @goals.route('/goals/<Account_id>', methods=['GET'])

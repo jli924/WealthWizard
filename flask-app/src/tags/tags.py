@@ -41,32 +41,6 @@ def create_Tag():
         db.get_db().rollback()
         response = {"error": str(e)}
         return make_response(jsonify(response), 500)
-    
-# update the Tags information
-@tags.route('/tags', methods=['PUT'])
-def update_Tag():
-    Tag_info = request.json
-    id = Tag_info['Tag_id']
-    TagName = Tag_info['TagName']
-
-    query = 'UPDATE Tags SET TagName = %s'
-    data = (TagName, id)
-    cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
-    db.get_db().commit()
-    return jsonify({'message': 'Tag updated successfully'}), 200
-
-# Delete the Tags info given their ID number
-@tags.route('/tags/<tag_id>', methods=['DELETE'])
-def delete_Tag(Tag_id):
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute('DELETE FROM Tags WHERE Tag_id = %s', (Tag_id))
-        db.get_db().commit()
-        return make_response(jsonify({'message': 'Tag deleted successfully'}), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        return make_response(jsonify({'error': str(e)}), 500)
 
 # Get detailed info of all Tags with a particular Tag_ id
 @tags.route('/tags/<Tag_id>', methods=['GET'])
