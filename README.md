@@ -19,9 +19,8 @@ To set up & run the WealthWizard app:
 
 ## Appsmith & UI
 1. Go to our UI repository: https://github.com/jli924/WealthWizardUI
-2. Scroll down to the README.md file and click "View application"
 3. Navigate between different pages and manage your finances!
-3a. When navigating between different pages, be sure to use the home button (don't click through the tabs at the top! It can cause issues with loading data)
+4. When navigating between different pages, be sure to use the home page's buttons (don't click through the tabs at the top! It can cause issues with loading data)
 
 
 
