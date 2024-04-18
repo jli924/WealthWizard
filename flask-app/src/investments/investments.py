@@ -24,23 +24,23 @@ def get_investments():
     return the_response
 
 # Add a new investment to the database
-@investments.route('/investments', methods=['POST'])
-def create_investments():
-    data = request.get_json()  
-    # Insert data into database
-    try:
-        cursor = db.get_db().cursor()
-        cursor.execute(
-            'INSERT INTO Investments (Investment_id, Account_id, Type, Amount, Description, Date) VALUES (%s, %s, %s, %s, %s, %s)',
-            (data.get('Investment_id'), data.get('Account_id'), data('Type'), data.get('Amount'), data.get('Description'), data.get('Date'))
-        )
-        db.get_db().commit()
-        response = {"message": "Investment created successfully"}
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        response = {"error": str(e)}
-        return make_response(jsonify(response), 500)
+# @investments.route('/investments', methods=['POST'])
+# def create_investments():
+#     data = request.get_json()  
+#     # Insert data into database
+#     try:
+#         cursor = db.get_db().cursor()
+#         cursor.execute(
+#             'INSERT INTO Investments (Investment_id, Account_id, Type, Amount, Description, Date) VALUES (%s, %s, %s, %s, %s, %s)',
+#             (data.get('Investment_id'), data.get('Account_id'), data('Type'), data.get('Amount'), data.get('Description'), data.get('Date'))
+#         )
+#         db.get_db().commit()
+#         response = {"message": "Investment created successfully"}
+#         return make_response(jsonify(response), 200)
+#     except Exception as e:
+#         db.get_db().rollback()
+#         response = {"error": str(e)}
+#         return make_response(jsonify(response), 500)
     
 # update the mutable investment information
 @investments.route('/investments/investment_id', methods=['PUT'])
