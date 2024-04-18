@@ -64,13 +64,15 @@ def add_new_budget(AccountID):
     # Assuming bill_id and budget_id are not passed in the JSON, as they are auto-incremented
     max_a = the_data['MaxAmount']
     madefor = the_data['MadeFor']
+    catID = the_data["Category"]
 
 
     # Constructing the query
     query = 'INSERT INTO Budgets (AccountID, MaxAmount, MadeFor, CategoryID, MinRemaining, Remaining, Spent) VALUES ('
     query += '"' + str(AccountID) + '", '
     query += '"' + str(max_a) + '", '
-    query += '"' + madefor + '", 1, 1.00, '
+    query += '"' + madefor + '", '
+    query += '"' + str(catID) + '", 1.00, '
     query += '"' + str(max_a) + '", 0.00)'
     current_app.logger.info(query)
 
