@@ -31,12 +31,10 @@ def add_new_accountinfo(User_id):
 
     # Extracting the variables
     # Assuming bill_id and budget_id are not passed in the JSON, as they are auto-incremented
-    accID = the_data['Account_id']
-
+    
     # Constructing the query
-    query = 'INSERT INTO AccountInfo (User_id, Account_id) VALUES ('
-    query += '"' + str(User_id) + '", '
-    query += '"' + str(accID) + '")'
+    query = 'INSERT INTO AccountInfo (User_id) VALUES ('
+    query += '"' + str(User_id) + '")'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 

@@ -24,12 +24,12 @@ def get_accounts():
     return the_response
 
 # add a new account to the database
-@accounts.route('/accounts', methods=['POST'])
-def add_new_account():
+@accounts.route('/accounts/<User_id>', methods=['POST'])
+def add_new_account(User_id):
     
     the_data = request.json
     current_app.logger.info(the_data)
-
+    
     # Extracting the variables
     # Assuming bill_id and budget_id are not passed in the JSON, as they are auto-incremented
     bal = the_data['Balance']
