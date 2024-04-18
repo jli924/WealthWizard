@@ -2,7 +2,7 @@
 Accounts blueprint
 """
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -25,22 +25,44 @@ def get_accounts():
 
 # add a new account to the database
 @accounts.route('/accounts', methods=['POST'])
-def create_account():
-    data = request.get_json()  
-    # Insert data into database
-    try:
-        cursor = db.get_db().cursor()
-        cursor.execute(
-            'INSERT INTO Accounts (Account_id, Balance, AccountType, Date_created) VALUES (%s, %s, %s, %s)',
-            (data['Account_id'], data.get('Balance'), data['AccountType'], data.get('Date_created'))
-        )
-        db.get_db().commit()
-        response = {"message": "Account created successfully"}
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        response = {"error": str(e)}
-        return make_response(jsonify(response), 500)
+def add_new_account():
+    
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    # Assuming bill_id and budget_id are not passed in the JSON, as they are auto-incremented
+    bal = the_data['Balance']
+    type = the_data['AccountType']
+
+    # Constructing the query
+    query = 'INSERT INTO Accounts (Balance, AccountType) VALUES ('
+    query += '"' + str(bal) + '", '
+    query += '"' + str(type) + '")'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+# def create_account():
+#     data = request.get_json()  
+#     # Insert data into database
+#     try:
+#         cursor = db.get_db().cursor()
+#         cursor.execute(
+#             'INSERT INTO Accounts (Account_id, Balance, AccountType, Date_created) VALUES (%s, %s, %s, %s)',
+#             (data['Account_id'], data.get('Balance'), data['AccountType'], data.get('Date_created'))
+#         )
+#         db.get_db().commit()
+#         response = {"message": "Account created successfully"}
+#         return make_response(jsonify(response), 200)
+#     except Exception as e:
+#         db.get_db().rollback()
+#         response = {"error": str(e)}
+#         return make_response(jsonify(response), 500)
     
 # update the account's information
 @accounts.route('/accounts', methods=['PUT'])
@@ -99,5 +121,6 @@ def get_account_userid(User_id):
    the_response.status_code = 200
    the_response.mimetype = 'application/json'
    return the_response
+
 
 
