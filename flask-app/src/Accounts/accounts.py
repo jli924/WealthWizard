@@ -33,8 +33,7 @@ def get_max_accountid():
 
     # +1
     next_id = max_id + 1
-    json_data = {'next_id': next_id}
-    the_response = make_response(jsonify(json_data))
+    the_response = make_response(jsonify(next_id))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
