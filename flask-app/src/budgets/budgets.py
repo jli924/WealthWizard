@@ -2,7 +2,7 @@
 budgets blueprint
 """
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -24,23 +24,31 @@ def get_budgets():
     return the_response
 
 # Add a new budget to the database
-@budgets.route('/budgets', methods=['POST'])
-def create_budget():
-    data = request.get_json()  
-    # Insert data into database
-    try:
-        cursor = db.get_db().cursor()
-        cursor.execute(
-            'INSERT INTO Budgets (Budget_id, MaxAmount, MinRemaining, Remaining, Spent) VALUES (%s, %s, %s, %s, %s)',
-            (data.get('Budget_id'), data.get('MaxAmount'), data.get('MinRemaining'), data.get('Remaining'), data.get('Spent'))
-        )
-        db.get_db().commit()
-        response = {"message": "Budget created successfully"}
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        db.get_db().rollback()
-        response = {"error": str(e)}
-        return make_response(jsonify(response), 500)
+@budgets.route('/budgets/<AccountID>', methods=['POST']) 
+def add_new_budget(AccountID):
+    
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    # Assuming bill_id and budget_id are not passed in the JSON, as they are auto-incremented
+    max_a = the_data['MaxAmount']
+    madefor = the_data['MadeFor']
+
+
+    # Constructing the query
+    query = 'INSERT INTO Budgets (AccountID, MaxAmount, MadeFor, CategoryID, MinRemaining, Remaining, Spent) VALUES ('
+    query += '"' + str(AccountID) + '", '
+    query += '"' + str(max_a) + '", '
+    query += '"' + madefor + '", 1, 1.00, 1.00, 0.00)'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
     
 # update the mutable budget information
 @budgets.route('/budgets/<Budget_id>', methods=['PUT'])
